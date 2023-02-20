@@ -1,0 +1,12 @@
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\bin\Debug\net6.0\TatBlog.Core.deps.json
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\bin\Debug\net6.0\TatBlog.Core.dll
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\bin\Debug\net6.0\TatBlog.Core.pdb
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.csproj.AssemblyReference.cache
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.AssemblyInfoInputs.cache
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.AssemblyInfo.cs
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.csproj.CoreCompileInputs.cache
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.dll
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\refint\TatBlog.Core.dll
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.pdb
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\ref\TatBlog.Core.dll

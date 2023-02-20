@@ -1,0 +1,17 @@
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\bin\Debug\net6.0\TatBlog.Services.deps.json
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\bin\Debug\net6.0\TatBlog.Services.dll
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\bin\Debug\net6.0\TatBlog.Services.pdb
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\bin\Debug\net6.0\TatBlog.Core.dll
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\bin\Debug\net6.0\TatBlog.Data.dll
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\bin\Debug\net6.0\TatBlog.Core.pdb
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\bin\Debug\net6.0\TatBlog.Data.pdb
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\TatBlog.Services.csproj.AssemblyReference.cache
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\TatBlog.Services.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\TatBlog.Services.AssemblyInfoInputs.cache
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\TatBlog.Services.AssemblyInfo.cs
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\TatBlog.Services.csproj.CoreCompileInputs.cache
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\TatBlog.Services.csproj.CopyComplete
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\TatBlog.Services.dll
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\refint\TatBlog.Services.dll
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\TatBlog.Services.pdb
+D:\Study\Web nang cao\2014452_NguyenXuanHung_Lab01\TipsAndTrick\TagBlog.Services\obj\Debug\net6.0\ref\TatBlog.Services.dll
