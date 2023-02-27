@@ -40,6 +40,27 @@ namespace TatBlog.Data.Seeders
             },
             new()
             {
+                FullName = "Masson GreenWood",
+                UrlSlug = "masson-greenwood",
+                Email ="greenwood@gmail.com",
+                JoinDate = new DateTime(2022, 1,1)
+            },
+            new()
+            {
+                FullName = "Hakimi",
+                UrlSlug = "hakimi",
+                Email ="hakimi@gmail.com",
+                JoinDate = new DateTime(2022, 11,4)
+            },
+            new()
+            {
+                FullName = "Lionel Scaloni",
+                UrlSlug = "lionel-scaloni",
+                Email ="mouth@gmail.com",
+                JoinDate = new DateTime(2022, 11,11)
+            },
+            new()
+            {
                 FullName = "Wonder Woman",
                 UrlSlug = "wonder-woman",
                 Email = "wonder@gmail.com",
@@ -57,11 +78,17 @@ namespace TatBlog.Data.Seeders
         {
             var categories = new List<Category>()
             {
-                new(){ Name= "Net.Core", Description = "Net.Core", UrlSlug="net-core" },
-               new(){ Name= "Architechture", Description="Architechture ", UrlSlug="architech"},
-               new(){ Name="Mesaging", Description = "Mesaging", UrlSlug="mesaging"},
-               new(){Name = "OPP", Description ="Ojected-Oriented Program", UrlSlug="opp"},
-               new(){Name="Design Patterns", Description= "Design Patterns", UrlSlug= "design-patterns"}
+                new(){ Name= "Net.Core", Description = "Net.Core", UrlSlug="net-core",ShowOnMenu=true },
+               new(){ Name= "Architechture", Description="Architechture ", UrlSlug="architech", ShowOnMenu=true},
+               new(){ Name="Mesaging", Description = "Mesaging", UrlSlug="mesaging", ShowOnMenu = true},
+               new(){Name = "OPP", Description ="Ojected-Oriented Program", UrlSlug="opp", ShowOnMenu = true},
+               new(){Name="Network Programing", Description= "Network Programing", UrlSlug= "network-programing", ShowOnMenu = true},
+               new(){Name="Design Patterns", Description= "Design Patterns", UrlSlug= "design-patterns", ShowOnMenu = true},
+               new(){Name="Front-End", Description= "Front-End", UrlSlug= "front-end", ShowOnMenu = true},
+               new(){Name="Back-End", Description= "Back-End", UrlSlug= "back-end", ShowOnMenu = true},
+               new(){Name="Security", Description= "Security", UrlSlug= "security", ShowOnMenu = true},
+               new(){Name="Development", Description= "Development", UrlSlug= "development", ShowOnMenu = true}
+
 
             };
             _dbContext.AddRange(categories);
@@ -98,16 +125,90 @@ namespace TatBlog.Data.Seeders
                     Meta = "Nothing to read...",
                     UrlSlug = "aspnet-core-diagnostic-scenarios",
                     Published = true,
-                    PostedDay = new DateTime(2021, 9, 30, 10, 20, 0),
+                    PostedDate = new DateTime(2021, 9, 30, 10, 20, 0),
                     ModifiedDate = null,
                     ViewCount = 10,
                     Author = authors[0],
-                    Catelory = categories[0],
+                    Category = categories[0],
                     Tags = new List<Tag>()
                     {
                         tags[0]
                     }
+                },
+                 new()
+                {
+                   
+                    Title = "Hi",
+                    ShortDescription = "David and friend has great .....",
+                    Description = "Here's a few DON'T and DO example...",
+                    Meta = "Nothing to read...",
+                    UrlSlug = "aspnet-core-diagnostic-scenarios",
+                    Published = true,
+                    PostedDate = new DateTime(2021, 9, 50, 10, 20, 0),
+                    ModifiedDate = null,
+                    ViewCount = 2,
+                    Author = authors[1],
+                    Category = categories[1],
+                    Tags = new List<Tag>()
+                    {
+                        tags[1]
+                    }
+                },
+                  new()
+                {
+                    Title = "ASP.NET Core Diagnostic Scenarios",
+                    ShortDescription = "David and friend has great .....",
+                    Description = "Here's a few DON'T and DO example...",
+                    Meta = "Nothing to read...",
+                    UrlSlug = "aspnet-core-diagnostic-scenarios",
+                    Published = true,
+                    PostedDate = new DateTime(2021, 9, 30, 10, 20, 0),
+                    ModifiedDate = null,
+                    ViewCount = 10,
+                    Author = authors[2],
+                    Category = categories[2],
+                    Tags = new List<Tag>()
+                    {
+                        tags[2]
+                    }
+                },
+                   new()
+                {
+                    Title = "ASP.NET Core Diagnostic Scenarios",
+                    ShortDescription = "David and friend has great .....",
+                    Description = "Here's a few DON'T and DO example...",
+                    Meta = "Nothing to read...",
+                    UrlSlug = "aspnet-core-diagnostic-scenarios",
+                    Published = true,
+                    PostedDate = new DateTime(2021, 9, 30, 10, 20, 0),
+                    ModifiedDate = null,
+                    ViewCount = 10,
+                    Author = authors[3],
+                    Category = categories[3],
+                    Tags = new List<Tag>()
+                    {
+                        tags[3]
+                    }
+                },
+                    new()
+                {
+                    Title = "ASP.NET Core Diagnostic Scenarios",
+                    ShortDescription = "David and friend has great .....",
+                    Description = "Here's a few DON'T and DO example...",
+                    Meta = "Nothing to read...",
+                    UrlSlug = "aspnet-core-diagnostic-scenarios",
+                    Published = true,
+                    PostedDate = new DateTime(2021, 9, 30, 10, 20, 0),
+                    ModifiedDate = null,
+                    ViewCount = 10,
+                    Author = authors[4],
+                    Category = categories[4],
+                    Tags = new List<Tag>()
+                    {
+                        tags[4]
+                    }
                 }
+
 
             };
             _dbContext.AddRange(posts);

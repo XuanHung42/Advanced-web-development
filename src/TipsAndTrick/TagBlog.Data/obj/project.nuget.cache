@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "BQ1ATUPQcPrCcgkSzZMLtO+Vb2mmA2X5npRi3FqXahZn6GxuFjZddV3qsgDZ1FwZ2+X2sKlZCYkxZ3Rfo/CRrQ==",
+  "dgSpecHash": "QPvgYP3c0k8TgrAaxF+vWLzxO5seluKnBQ4OiYoHgo0H6DG7mhyVeqLHewSCD3lS15TSsU5M6g97w8KLFuqwyw==",
   "success": true,
-  "projectFilePath": "D:\\Study\\Web nang cao\\2014452_NguyenXuanHung_Lab01\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
+  "projectFilePath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

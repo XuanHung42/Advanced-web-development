@@ -24,9 +24,9 @@ namespace TatBlog.Data.Mappings
             builder.Property(x => x.ImageUrl).HasMaxLength(1000);
             builder.Property(x=> x.ViewCount).IsRequired().HasDefaultValue(0);
             builder.Property(x => x.Published).IsRequired().HasDefaultValue(false);
-            builder.Property(x => x.PostedDay).HasColumnType("datetime");
+            builder.Property(x => x.PostedDate).HasColumnType("datetime");
             builder.Property(x => x.ModifiedDate).HasColumnType("datetime");
-            builder.HasOne(x => x.Catelory)
+            builder.HasOne(x => x.Category)
                 .WithMany(c => c.Posts)
                 .HasForeignKey(x => x.CategoryId)
                 .HasConstraintName("FK_Posts_Categories")

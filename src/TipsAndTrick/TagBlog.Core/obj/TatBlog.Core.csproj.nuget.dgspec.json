@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Study\\Web nang cao\\2014452_NguyenXuanHung_Lab01\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {}
+    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {}
   },
   "projects": {
-    "D:\\Study\\Web nang cao\\2014452_NguyenXuanHung_Lab01\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
+    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Web nang cao\\2014452_NguyenXuanHung_Lab01\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
+        "projectUniqueName": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
         "projectName": "TatBlog.Core",
-        "projectPath": "D:\\Study\\Web nang cao\\2014452_NguyenXuanHung_Lab01\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
+        "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Web nang cao\\2014452_NguyenXuanHung_Lab01\\TipsAndTrick\\TagBlog.Core\\obj\\",
+        "outputPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -39,6 +39,12 @@
       "frameworks": {
         "net6.0": {
           "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[7.0.3, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",

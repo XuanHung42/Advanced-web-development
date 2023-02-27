@@ -18,7 +18,7 @@ namespace TatBlog.Data.Mappings
             builder.Property(c=> c.Name).HasMaxLength(50).IsRequired();
             builder.Property(c => c.Description).HasMaxLength(500);
             builder.Property(c=> c.UrlSlug).HasMaxLength(50).IsRequired();
-            builder.Property(c=> c.ShowMenu).IsRequired().HasDefaultValue(false);
+            builder.Property(c=> c.ShowOnMenu).IsRequired().HasDefaultValue(false);
 
         } 
     }
