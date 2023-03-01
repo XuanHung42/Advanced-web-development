@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj": {}
+    "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj": {}
   },
   "projects": {
-    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
+    "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
+        "projectUniqueName": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
         "projectName": "TatBlog.Core",
-        "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
+        "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\obj\\",
+        "outputPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -65,14 +65,14 @@
         }
       }
     },
-    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj": {
+    "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
+        "projectUniqueName": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
         "projectName": "TatBlog.Data",
-        "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
+        "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\obj\\",
+        "outputPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -89,8 +89,8 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
-                "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj"
+              "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
+                "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj"
               }
             }
           }
@@ -134,14 +134,14 @@
         }
       }
     },
-    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj": {
+    "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj",
+        "projectUniqueName": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj",
         "projectName": "TatBlog.Services",
-        "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj",
+        "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\obj\\",
+        "outputPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -158,11 +158,11 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
-                "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj"
+              "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
+                "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj"
               },
-              "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj": {
-                "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj"
+              "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj": {
+                "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj"
               }
             }
           }
@@ -202,14 +202,14 @@
         }
       }
     },
-    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj": {
+    "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj",
+        "projectUniqueName": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj",
         "projectName": "TatBlog.WinApp",
-        "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj",
+        "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\obj\\",
+        "outputPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -226,14 +226,14 @@
           "net6.0": {
             "targetAlias": "net6.0",
             "projectReferences": {
-              "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
-                "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj"
+              "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
+                "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj"
               },
-              "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj": {
-                "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj"
+              "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj": {
+                "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj"
               },
-              "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj": {
-                "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj"
+              "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj": {
+                "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Services\\TatBlog.Services.csproj"
               }
             }
           }
