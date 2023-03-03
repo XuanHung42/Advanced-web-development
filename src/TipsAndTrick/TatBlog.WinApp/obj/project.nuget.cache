@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eD+QbqOzgeAzCLiI5a7t+GP9189+9ftiTjGmWyCZ1f2DWr1TDlZHwWFFiVfwQotrxz5NjK9Frf+npfceHbSF8w==",
+  "dgSpecHash": "pXqxxy8UIeTEgHmKeIC2o9LamxqRyhUkUOutNc04wfoVx9sNW3QMiBDvA4UuF4aS1rYo95od1cP4pgz3xZw6gA==",
   "success": true,
-  "projectFilePath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj",
+  "projectFilePath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TatBlog.WinApp\\TatBlog.WinApp.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\ADMIN\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

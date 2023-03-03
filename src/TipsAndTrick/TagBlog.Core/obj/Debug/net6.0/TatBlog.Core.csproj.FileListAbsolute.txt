@@ -22,3 +22,15 @@ D:\Study\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0
 D:\Study\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\refint\TatBlog.Core.dll
 D:\Study\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.pdb
 D:\Study\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\ref\TatBlog.Core.dll
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\bin\Debug\net6.0\TatBlog.Core.deps.json
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\bin\Debug\net6.0\TatBlog.Core.dll
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\bin\Debug\net6.0\TatBlog.Core.pdb
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.csproj.AssemblyReference.cache
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.GeneratedMSBuildEditorConfig.editorconfig
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.AssemblyInfoInputs.cache
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.AssemblyInfo.cs
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.csproj.CoreCompileInputs.cache
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.dll
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\refint\TatBlog.Core.dll
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\TatBlog.Core.pdb
+D:\Study\3\Advanced-web-development\src\TipsAndTrick\TagBlog.Core\obj\Debug\net6.0\ref\TatBlog.Core.dll
