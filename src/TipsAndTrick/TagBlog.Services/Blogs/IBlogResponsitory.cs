@@ -37,7 +37,12 @@ namespace TatBlog.Services.Blogs
         Task<IPagedList<TagItem>> GetPagedTagsAsync(
             IPagingParams pagingParams, CancellationToken cancellationToken = default
             );
+        Task<Tag> GetTagSlusAsync(string slug, CancellationToken cancellation = default);
+        Task<IList<TagItem>> GetTagsAsync(CancellationToken cancellationToken = default);
+        Task<IList<CategoryItem>> GetCategorysAsync(CancellationToken cancellationToken = default);
 
+        Task<IList<TagItem>> DeleleTagWithSlug(string slug, CancellationToken cancellation= default);
+        Task<Tag> FindTagWithId(int id, CancellationToken cancellationToken = default);
     }
     
 }

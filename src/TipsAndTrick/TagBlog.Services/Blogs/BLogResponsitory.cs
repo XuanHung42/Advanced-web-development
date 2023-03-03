@@ -20,6 +20,8 @@ namespace TatBlog.Services.Blogs
         {
             _context = context;
         }
+
+        //tim bai viet có ten dinh danh la slug
         public async Task<Post> GetPostAsync(
             int year,
             int mouth,
@@ -122,6 +124,51 @@ namespace TatBlog.Services.Blogs
                  });
             return await tagQuery
                 .ToPagedListAsync(pagingParams,cancellationToken);
+        }
+        //Tim chuyen muc theo slug
+        public async Task<Tag> GetTagSlusAsync(string slug, CancellationToken cancellation = default)
+        {
+            IQueryable<Tag> queryTag = _context.Set<Tag>();
+            queryTag.Where(x => x.UrlSlug == slug);
+            return await queryTag.FirstOrDefaultAsync(cancellation);
+        }
+        //Lay het toan bo Tag
+        public async Task<IList<TagItem>> GetTagsAsync(CancellationToken cancellationToken = default)
+        {
+            IQueryable<Tag> tags= _context.Set<Tag>();
+            return await tags.Select(x => new TagItem()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                UrlSlug = x.UrlSlug,
+                PostCount = x.Posts.Count(x=> x.Published)
+            }).ToListAsync(cancellationToken);
+        }
+        //Xoa Tag voi ten dinh danh Slug
+        public Task<IList<TagItem>> DeleleTagWithSlug(string slug, CancellationToken cancellation = default)
+        {
+            throw new NotImplementedException();
+        }
+
+        //Lay toan bo Category
+        public async Task<IList<CategoryItem>> GetCategorysAsync(CancellationToken cancellationToken = default)
+        {
+            IQueryable<Category> tags = _context.Set<Category>();
+            return await tags.Select(x => new CategoryItem()
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Description = x.Description,
+                UrlSlug = x.UrlSlug,
+                PostCount = x.Posts.Count(x => x.Published)
+            }).ToListAsync(cancellationToken);
+        }
+
+        public async Task<Tag> FindTagWithId(int id, CancellationToken cancellationToken = default)
+        {
+            IQueryable<Tag> tagQuery = _context.Set<Tag>().Where(x=> x.Id== id);
+            return await tagQuery.FirstOrDefaultAsync(cancellationToken);
         }
     }
 }
