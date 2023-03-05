@@ -1,0 +1,23 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TagBlog.Core\TatBlog.Core.csproj" />
+    <ProjectReference Include="..\TagBlog.Data\TatBlog.Data.csproj" />
+    <ProjectReference Include="..\TagBlog.Services\TatBlog.Services.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Models\" />
+    <Folder Include="wwwroot\fonts\" />
+    <Folder Include="wwwroot\lib\" />
+    <Folder Include="wwwroot\templates\emails\" />
+    <Folder Include="wwwroot\uploads\pictures\" />
+  </ItemGroup>
+
+</Project>
