@@ -146,9 +146,21 @@ namespace TatBlog.Services.Blogs
             }).ToListAsync(cancellationToken);
         }
         //Xoa Tag voi ten dinh danh Slug
-        public Task<IList<TagItem>> DeleleTagWithSlug(string slug, CancellationToken cancellation = default)
+        public async Task<bool> DeleleTagWithSlugAsync(string slug, CancellationToken cancellation = default)
         {
-            throw new NotImplementedException();
+            var tagDelete = await _context.Set<Tag>()
+                .Where(t=> t.UrlSlug == slug)
+                .FirstOrDefaultAsync(cancellation);
+            if (tagDelete == null)
+            {
+                return false;
+            }
+            else
+            {
+                _context.Set<Tag>().Remove(tagDelete);
+                await _context.SaveChangesAsync(cancellation);
+                return true;
+            }
         }
 
         //Lay toan bo Category
@@ -164,11 +176,52 @@ namespace TatBlog.Services.Blogs
                 PostCount = x.Posts.Count(x => x.Published)
             }).ToListAsync(cancellationToken);
         }
-
-        public async Task<Tag> FindTagWithId(int id, CancellationToken cancellationToken = default)
+        //Tim the Tag bang ID
+        public async Task<Tag> FindTagWithIdAsync(int id, CancellationToken cancellationToken = default)
         {
             IQueryable<Tag> tagQuery = _context.Set<Tag>().Where(x=> x.Id== id);
             return await tagQuery.FirstOrDefaultAsync(cancellationToken);
         }
-    }
+		//Tim Category bang ID
+		public async Task<Category> FindCategoryWithIdAsync(int id, CancellationToken cancellationToken = default)
+		{
+            IQueryable<Category> categoryQuery = _context.Set<Category>()
+                .Where(c => c.Id == id);
+            return await categoryQuery.FirstOrDefaultAsync(cancellationToken);
+		}
+
+        //Xoa Category theo Slug
+		public async Task<bool> DeleteCategoryWithSlugAsync(string slug, CancellationToken cancellationToken)
+		{
+            var categoryDelete = await _context.Set<Category>()
+                .Where(c => c.UrlSlug == slug).FirstOrDefaultAsync(cancellationToken);
+            if(categoryDelete == null) {
+                return false;
+            }
+            else
+            {
+                _context.Set<Category>().Remove(categoryDelete);
+                return true;
+            }
+		}
+        //Kiem tra Category da ton tai voi dinh danh slug hay chua
+		public async Task<bool> IsCategoryExistSlugAsync(string slug, CancellationToken cancellationToken = default)
+		{
+            var categoryExist = await  _context.Set<Category>()
+                .Where(c=> c.UrlSlug == slug).FirstOrDefaultAsync(cancellationToken);
+            if(categoryExist == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+		}
+
+		public Task<Post> FindPostByPostQueryAsync(PostQuery postQuery, CancellationToken cancellationToken = default)
+		{
+			throw new NotImplementedException();
+		}
+	}
 }

@@ -41,8 +41,13 @@ namespace TatBlog.Services.Blogs
         Task<IList<TagItem>> GetTagsAsync(CancellationToken cancellationToken = default);
         Task<IList<CategoryItem>> GetCategorysAsync(CancellationToken cancellationToken = default);
 
-        Task<IList<TagItem>> DeleleTagWithSlug(string slug, CancellationToken cancellation= default);
-        Task<Tag> FindTagWithId(int id, CancellationToken cancellationToken = default);
-    }
-    
+        Task<bool> DeleleTagWithSlugAsync(string slug, CancellationToken cancellation= default);
+        Task<Tag> FindTagWithIdAsync(int id, CancellationToken cancellationToken = default);
+		Task<Category> FindCategoryWithIdAsync(int id, CancellationToken cancellationToken = default);
+        Task<bool> DeleteCategoryWithSlugAsync(string slug, CancellationToken cancellationToken);
+        Task<bool> IsCategoryExistSlugAsync(string slug, CancellationToken cancellationToken = default);
+        Task<Post> FindPostByPostQueryAsync(PostQuery postQuery, CancellationToken cancellationToken = default);
+
+	}
+
 }
