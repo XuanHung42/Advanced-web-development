@@ -1,12 +1,13 @@
-﻿|
+﻿@using static TatBlog.Core.Contracts.IPagedList;
+
+@model IPagedList<Post>
 @{
-    ViewData["PageTitle"] = "Trang chủ";
+	ViewData["PageTitle"] = "Trang chủ";
+
 }
+<div class="p-4">
+	@foreach (var postItem in Model){
+		<partial name="_PostList" model="postItem"/>
+	}
 
-<h1>
-    Đây là trang chủ
-</h1>
-
-<p>
-    Bây giờ là @ViewBag.CurrentTime
-</p>
+</div>

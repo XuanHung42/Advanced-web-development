@@ -9,6 +9,7 @@ using TatBlog.Core.DTO;
 using TatBlog.Core.Entities;
 using TatBlog.Data.Contexts;
 using TatBlog.Services.Extensions;
+using static TatBlog.Core.Contracts.IPagedList;
 
 namespace TatBlog.Services.Blogs
 {
@@ -88,7 +89,7 @@ namespace TatBlog.Services.Blogs
             IQueryable<Category> categories = _context.Set<Category>();
             if (showOnMenu)
             {
-                categories = categories.Where(x => x.ShowOnMenu);
+                categories = categories.Where(x => x.ShowMenu);
             }
 
             return await categories
@@ -101,7 +102,7 @@ namespace TatBlog.Services.Blogs
                     Description = x.Description,
                     UrlSlug = x.UrlSlug,
 
-                    ShowOnMenu = x.ShowOnMenu,
+                    ShowOnMenu = x.ShowMenu,
                     PostCount = x.Posts.Count(p => p.Published)
 
                 })
@@ -222,6 +223,93 @@ namespace TatBlog.Services.Blogs
 		public Task<Post> FindPostByPostQueryAsync(PostQuery postQuery, CancellationToken cancellationToken = default)
 		{
 			throw new NotImplementedException();
+		}
+
+		public async Task<bool> ChangedPublishedPostAsync(int id, bool published, CancellationToken cancellationToken = default)
+		{
+            var post = await _context.Set<Post>().FindAsync(id);
+            if (post is null)
+            {
+                return false;
+            }
+            post.Published = !post.Published;
+            await _context.SaveChangesAsync(cancellationToken);
+            return post.Published;
+
+		}
+
+		public Task<IPagedList.IPagedList<Post>> FindAndPagedPostAsync(PostQuery query, IPagingParams pagingParams, CancellationToken cancellationToken = default)
+		{
+			throw new NotImplementedException();
+		}
+		private IQueryable<Post> FilterPosts(PostQuery condition)
+		{
+			IQueryable<Post> posts = _context.Set<Post>()
+				.Include(x => x.Category)
+				.Include(x => x.Tags);
+
+			if (condition.PublishedOnly)
+			{
+				posts = posts.Where(x => x.Published);
+			}
+
+			if (condition.NotPublished)
+			{
+				posts = posts.Where(x => !x.Published);
+			}
+
+			if (condition.CategoryId > 0)
+			{
+				posts = posts.Where(x => x.CategoryId == condition.CategoryId);
+			}
+
+			if (!string.IsNullOrWhiteSpace(condition.CategorySlug))
+			{
+				posts = posts.Where(x => x.Category.UrlSlug == condition.CategorySlug);
+			}
+
+			if (!string.IsNullOrWhiteSpace(condition.TagSlug))
+			{
+				posts = posts.Where(x => x.Tags.Any(t => t.UrlSlug == condition.TagSlug));
+			}
+
+			if (!string.IsNullOrWhiteSpace(condition.Keyword))
+			{
+				posts = posts.Where(x => x.Title.Contains(condition.Keyword) ||
+										 x.ShortDescription.Contains(condition.Keyword) ||
+										 x.Description.Contains(condition.Keyword) ||
+										 x.Category.Name.Contains(condition.Keyword) ||
+										 x.Tags.Any(t => t.Name.Contains(condition.Keyword)));
+			}
+
+			if (condition.Year > 0)
+			{
+				posts = posts.Where(x => x.PostedDate.Year == condition.Year);
+			}
+
+			if (condition.Month > 0)
+			{
+				posts = posts.Where(x => x.PostedDate.Month == condition.Month);
+			}
+
+			if (!string.IsNullOrWhiteSpace(condition.TitleSlug))
+			{
+				posts = posts.Where(x => x.UrlSlug == condition.TitleSlug);
+			}
+
+			return posts;
+		}
+
+		public async Task<IPagedList<Post>> GetPagedPostsAsync(
+		PostQuery condition,
+		int pageNumber = 1,
+		int pageSize = 10,
+		CancellationToken cancellationToken = default)
+		{
+			return await FilterPosts(condition).ToPagedListAsync(
+				pageNumber, pageSize,
+				nameof(Post.PostedDate), "DESC",
+				cancellationToken);
 		}
 	}
 }

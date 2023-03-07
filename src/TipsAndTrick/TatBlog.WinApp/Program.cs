@@ -8,19 +8,12 @@ using TatBlog.WinApp;
 
 var context = new BlogDdContext();
 var seeder = new DataSeeder(context);
+
 seeder.Initialize();
-//var authors = context.Authors.ToList();
-//Console.WriteLine("{0,-4}{1,-30}{2,-30},{3,12}", "ID", "Full Name", "Email", "Join Date");
-//foreach (var auth in authors)
-//{
-//    Console.WriteLine("{0,-4}{1,-30}{2,-30}{3,12:MM/dd/yyyy}", auth.Id, auth.FullName, auth.Email, auth.JoinDate);
-
-//}
 
 
 
-
-IBlogResponsitory blogRepo = new BLogResponsitory(context);
+//IBlogResponsitory blogRepo = new BLogResponsitory(context);
 
 //var posts = await blogRepo.GetPopularArticlesAsync(3);
 
@@ -61,6 +54,6 @@ IBlogResponsitory blogRepo = new BLogResponsitory(context);
 
 //}
 
-var tagsId = await blogRepo.FindTagWithId(1);
-Console.WriteLine( tagsId.UrlSlug);
+//var tagsId = await blogRepo.FindTagWithId(1);
+//Console.WriteLine( tagsId.UrlSlug);
 
