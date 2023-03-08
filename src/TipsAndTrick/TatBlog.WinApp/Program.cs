@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Azure;
+using TatBlog.Core.Contracts;
 using TatBlog.Core.Entities;
 using TatBlog.Data.Contexts;
 using TatBlog.Data.Seeders;
@@ -8,21 +9,20 @@ using TatBlog.WinApp;
 
 var context = new BlogDdContext();
 var seeder = new DataSeeder(context);
+
 seeder.Initialize();
-//var authors = context.Authors.ToList();
-//Console.WriteLine("{0,-4}{1,-30}{2,-30},{3,12}", "ID", "Full Name", "Email", "Join Date");
-//foreach (var auth in authors)
-//{
-//    Console.WriteLine("{0,-4}{1,-30}{2,-30}{3,12:MM/dd/yyyy}", auth.Id, auth.FullName, auth.Email, auth.JoinDate);
-
-//}
 
 
 
-
-IBlogResponsitory blogRepo = new BLogResponsitory(context);
-
-//var posts = await blogRepo.GetPopularArticlesAsync(3);
+IAuthorResponsitory blogRepo = new AuthorResponsitory(context);
+ var pagingParams = new PagingParams
+{
+    PageNumber = 1,
+    PageSize = 5,
+    SortColumn = "Name",
+    SortOrder = "DESC"
+};
+var posts = await blogRepo.GetPagedAuthorsAsync(pagingParams);
 
 
 //foreach (var post in posts)
@@ -61,6 +61,6 @@ IBlogResponsitory blogRepo = new BLogResponsitory(context);
 
 //}
 
-var tagsId = await blogRepo.FindTagWithId(1);
-Console.WriteLine( tagsId.UrlSlug);
+//var tagsId = await blogRepo.FindTagWithId(1);
+//Console.WriteLine( tagsId.UrlSlug);
 
