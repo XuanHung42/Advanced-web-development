@@ -1,17 +1,19 @@
 ﻿@model Post
 
 @{
-	var imageUrl = string.IsNullOrWhiteSpace(Model.UrlSlug)
-			? "/images/image_4.jpg"
+	var imageUrl = string.IsNullOrWhiteSpace(Model.ImageUrl)
+			? "/images/image5.jpg"
 			: $"/{Model.ImageUrl}";
 }
 
 <article class="blog-entry mb-4">
 	<div class="card">
 		<div class="row g-0">
-			<img src="@imageUrl"
-				class="card-img"
-				alt="@Model.Title">
+			<div class="col-md-4">
+				<img src="@imageUrl"
+					 class="card-img"
+					 alt="@Model.Title">
+			</div>
 
 		</div>
 		<div class="col-md-8">
@@ -25,7 +27,7 @@
 					</small>
 
 					<span class="text-primary">
-						@Model.AuthorId
+						@Model.Author.UrlSlug
 					</span>
 					<small class="text-muted">
 						Chủ đề

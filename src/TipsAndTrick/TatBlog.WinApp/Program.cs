@@ -1,5 +1,6 @@
 ﻿// See https://aka.ms/new-console-template for more information
 using Azure;
+using TatBlog.Core.Contracts;
 using TatBlog.Core.Entities;
 using TatBlog.Data.Contexts;
 using TatBlog.Data.Seeders;
@@ -13,9 +14,15 @@ seeder.Initialize();
 
 
 
-//IBlogResponsitory blogRepo = new BLogResponsitory(context);
-
-//var posts = await blogRepo.GetPopularArticlesAsync(3);
+IAuthorResponsitory blogRepo = new AuthorResponsitory(context);
+ var pagingParams = new PagingParams
+{
+    PageNumber = 1,
+    PageSize = 5,
+    SortColumn = "Name",
+    SortOrder = "DESC"
+};
+var posts = await blogRepo.GetPagedAuthorsAsync(pagingParams);
 
 
 //foreach (var post in posts)

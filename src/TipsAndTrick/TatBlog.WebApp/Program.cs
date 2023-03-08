@@ -38,5 +38,19 @@ using(var scope = app.Services.CreateScope())
     seeder.Initialize();
 }
 
-
+app.MapControllerRoute(
+    name: "posts-by-category",
+    pattern: "blog/category/{slug}",
+    defaults: new { controller = "Blog", action = "Category" });
+app.MapControllerRoute(
+	name: "posts-by-tag",
+	pattern: "blog/tag/{slug}",
+	defaults: new { controller = "Blog", action = "Tag" });
+app.MapControllerRoute(
+	name: "single-post",
+	pattern: "blog/post/{year:int}/{month:int}/{day:int}/{slug}",
+	defaults: new { controller = "Blog", action = "Post" });
+app.MapControllerRoute(
+    name: "dafault",
+    pattern: "{controller=Blog}/{action=Index}/{id?}");
 app.Run();

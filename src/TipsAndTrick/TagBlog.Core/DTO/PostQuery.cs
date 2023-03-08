@@ -14,7 +14,7 @@ namespace TatBlog.Core.DTO
 
 		public bool NotPublished { get; set; }
 		public int? CategoryId { get; set; }
-
+		public string AuthorSlug { get; set; }
 		public string CategorySlug { get; set; }
 		public string TagSlug { get; set; }
 		public string TitleSlug { get; set; }
