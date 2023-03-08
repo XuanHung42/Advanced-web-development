@@ -13,16 +13,19 @@ namespace TatBlog.WebApp.Controllers
 			_blogResponsitory = blogResponsitory;
 		}
 
+   
 		public async Task<IActionResult> Index(
 
+		   [FromQuery(Name = "k")] string keyword = null,
 
-           [FromQuery(Name ="p")] int pageNumber =1 ,
+		   [FromQuery(Name ="p")] int pageNumber =1 ,
            [FromQuery(Name ="ps")] int pageSize = 10)
         
         {
             var postQuery = new PostQuery()
             {
                 PublishedOnly = true,
+                Keyword = keyword
             };
             var postsList = await _blogResponsitory.GetPagedPostsAsync(postQuery, pageNumber, pageSize);
 
