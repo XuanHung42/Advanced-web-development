@@ -110,6 +110,17 @@ namespace TatBlog.WebApp.Controllers
             return View("PostInfo", posts);
 
         }
+        //
+        public async Task<IActionResult> Archives(int year, int mouth, 
+            [FromQuery(Name ="p")] int pageNumber =1,
+            [FromQuery(Name ="ps")] int pageSize=5)
+        {
+            var postQuery = new PostQuery() { Year = year,
+                Month =mouth            
+            };
+            var posts = await _blogResponsitory.GetPagedPostsAsync(postQuery, pageNumber, pageSize);
+            return View("Index", posts);
+        }
 
         public IActionResult About()
         {

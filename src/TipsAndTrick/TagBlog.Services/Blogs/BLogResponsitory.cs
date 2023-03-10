@@ -339,7 +339,17 @@ namespace TatBlog.Services.Blogs
 
             return await query.FirstOrDefaultAsync(cancellation);
         }
-    }
+		public async Task<IList<Post>> RandomPosts(
+	            int r,
+	            CancellationToken cancellationToken = default
+                        )
+		{
+			return await _context.Set<Post>()
+			  .OrderBy(p => Guid.NewGuid())
+			  .Take(r)
+			  .ToListAsync(cancellationToken);
+		}
+	}
 
 	}
 
