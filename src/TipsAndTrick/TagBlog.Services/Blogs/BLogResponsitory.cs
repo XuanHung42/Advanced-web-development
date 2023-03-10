@@ -31,7 +31,7 @@ namespace TatBlog.Services.Blogs
             CancellationToken cancellationToken = default)
         {
             IQueryable<Post> postsQuery = _context.Set<Post>()
-                .Include(x => x.CategoryId)
+                .Include(x => x.Category)
                 .Include(x => x.Author);
             if (year > 0)
             {
@@ -128,7 +128,7 @@ namespace TatBlog.Services.Blogs
                 .ToPagedListAsync(pagingParams,cancellationToken);
         }
         //Tim chuyen muc theo slug
-        public async Task<Tag> GetTagSlusAsync(string slug, CancellationToken cancellation = default)
+        public async Task<Tag> FindTagSlugAsync(string slug, CancellationToken cancellation = default)
         {
             IQueryable<Tag> queryTag = _context.Set<Tag>();
             queryTag.Where(x => x.UrlSlug == slug);
@@ -266,10 +266,22 @@ namespace TatBlog.Services.Blogs
 			{
 				posts = posts.Where(x => x.CategoryId == condition.CategoryId);
 			}
+            if(condition.Year >0)
+            {
+                posts = posts.Where(x => x.PostedDate.Year == condition.Year);
+            }
+            if(condition.Month >0)
+            {
+                posts = posts.Where(x => x.PostedDate.Month == condition.Month);
+            }
 
 			if (!string.IsNullOrWhiteSpace(condition.CategorySlug))
 			{
 				posts = posts.Where(x => x.Category.UrlSlug == condition.CategorySlug);
+			}
+			if (!string.IsNullOrWhiteSpace(condition.AuthorSlug))
+			{
+				posts = posts.Where(x => x.Author.UrlSlug == condition.AuthorSlug);
 			}
 
 			if (!string.IsNullOrWhiteSpace(condition.TagSlug))

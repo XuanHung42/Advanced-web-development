@@ -41,24 +41,20 @@ namespace TatBlog.WebApp.Extensions
 			{
 				app.UseExceptionHandler("/Blog/Error");
 
-				// thêm header Strict-Transport-Security vào http response
 				app.UseHsts();
 			}
 
-			// tự động nén http response
 			app.UseResponseCompression();
 
-			// chuyển hướng http sang https
 			app.UseHttpsRedirection();
 
 			app.UseStaticFiles();
 
-			// lựa chọn endpoint phù hợp để xử lý http request
 			app.UseRouting();
 			return app;
 		}
 
-		// thêm dữ liệu mẫu vào csdl
+		
 		public static IApplicationBuilder UseDataSeeder(
 		  this IApplicationBuilder app)
 		{
