@@ -35,7 +35,7 @@ namespace TatBlog.Core.Collections
 
                 if (PageSize == 0) return 0;
                 var total = TotalItemCount / PageSize;
-                if (TotalItemCount % PageSize == 0)
+                if (TotalItemCount % PageSize > 0)
                     total++;
                 return total;
             }

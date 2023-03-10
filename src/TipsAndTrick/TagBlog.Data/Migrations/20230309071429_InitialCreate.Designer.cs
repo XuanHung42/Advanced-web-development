@@ -12,7 +12,7 @@ using TatBlog.Data.Contexts;
 namespace TatBlog.Data.Migrations
 {
     [DbContext(typeof(BlogDdContext))]
-    [Migration("20230219053520_InitialCreate")]
+    [Migration("20230309071429_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -141,7 +141,7 @@ namespace TatBlog.Data.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("PostedDay")
+                    b.Property<DateTime>("PostedDate")
                         .HasColumnType("datetime");
 
                     b.Property<bool>("Published")
@@ -229,7 +229,7 @@ namespace TatBlog.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Post_Authors");
 
-                    b.HasOne("TatBlog.Core.Entities.Category", "Catelory")
+                    b.HasOne("TatBlog.Core.Entities.Category", "Category")
                         .WithMany("Posts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -238,7 +238,7 @@ namespace TatBlog.Data.Migrations
 
                     b.Navigation("Author");
 
-                    b.Navigation("Catelory");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("TatBlog.Core.Entities.Author", b =>

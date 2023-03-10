@@ -35,7 +35,7 @@ namespace TatBlog.Services.Blogs
 				.Where(a => a.Id == id).FirstOrDefaultAsync(cancellationToken);
 		}
 
-		public async Task<IPagedList.IPagedList<AuthorItem>> GetPagedAuthorsAsync(IPagingParams pagingParams, CancellationToken cancellationToken = default)
+		public async Task<IPagedList<AuthorItem>> GetPagedAuthorsAsync(IPagingParams pagingParams, CancellationToken cancellationToken = default)
 		{
 			return await _context.Set<Author>()
 				.Select(a => new AuthorItem()
@@ -55,7 +55,7 @@ namespace TatBlog.Services.Blogs
 			throw new NotImplementedException();
 		}
 
-		public async Task<IPagedList.IPagedList<Author>> GetAuthorTopPostAsync(int n, IPagingParams pagingParams, CancellationToken cancellationToken = default)
+		public async Task<IPagedList<Author>> GetAuthorTopPostAsync(int n, IPagingParams pagingParams, CancellationToken cancellationToken = default)
 		{ 
 			     Author  authorsTop = _context.Set<Author>()
 				.Include(a => a.Posts)

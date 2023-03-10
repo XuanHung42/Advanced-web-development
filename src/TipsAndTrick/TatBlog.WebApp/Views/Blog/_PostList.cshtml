@@ -19,7 +19,13 @@
 		<div class="col-md-8">
 			<div class="card-body">
 				<h5 class="card-title">
-					@Model.Title
+				    <a  asp-controller="Blog"
+           asp-action="Post"
+           asp-route-slug="@Model.UrlSlug"
+           asp-route-year="@Model.PostedDate.Year"
+           asp-route-month="@Model.PostedDate.Month"
+           asp-route-day="@Model.PostedDate.Day"
+           class="text-reset text-decoration-none h5">@Model.Title </a>	
 				</h5>
 				<p class="card-text">
 					<small class="text-muted">
@@ -27,14 +33,21 @@
 					</small>
 
 					<span class="text-primary">
-						@Model.AuthorId
+						<a asp-controller="Blog"
+						   asp-action="Author"
+						   asp-route-slug="@Model.Author.UrlSlug"
+						   class="text-decoration-none">@Model.Author.FullName</a>
+						
 					</span>
 					<small class="text-muted">
 						Chủ đề
 					</small>
 
 					<span class="text-primary">
-						@Model.Category.Name
+						<a asp-controller="Blog"
+						   asp-action="Author"
+						   asp-route-slug="@Model.Author.UrlSlug"
+						   class="text-decoration-none">@Model.Category.Name</a>
 					</span>
 
 

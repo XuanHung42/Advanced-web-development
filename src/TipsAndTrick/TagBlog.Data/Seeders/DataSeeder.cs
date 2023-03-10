@@ -21,14 +21,14 @@ namespace TatBlog.Data.Seeders
         {
             _dbContext.Database.EnsureCreated();
 
-            if (_dbContext.Posts.Any())
-                return;
+            //if (_dbContext.Posts.Any())
+            //    return;
 
             var authors = AddAuthors();
             var categories = AddCategories();
             var tags = AddTags();
             var posts = AddPosts(authors, categories, tags);
-           ;
+           
         }
 
         private IList<Author> AddAuthors()
@@ -132,7 +132,7 @@ namespace TatBlog.Data.Seeders
           Published = true,
           PostedDate = new DateTime(2021,9,30,10,20,0),
           ModifiedDate = null,
-          ViewCount = 10,
+          ViewCount = 1,
           Author = authors[0],
           Category = categories[0],
           Tags = new List<Tag>(){tags[0]}
@@ -146,7 +146,7 @@ namespace TatBlog.Data.Seeders
           Published = true,
           PostedDate = new DateTime(2022,10,30,10,20,0),
           ModifiedDate = null,
-          ViewCount = 100,
+          ViewCount = 2,
           Author = authors[1],
           Category = categories[0],
           Tags = new List<Tag>(){tags[1], tags[2], tags[3]}
@@ -160,8 +160,8 @@ namespace TatBlog.Data.Seeders
           Published = true,
           PostedDate = new DateTime(2022,9,30,10,20,0),
           ModifiedDate = null,
-          ViewCount = 200,
-          Author = authors[2],
+          ViewCount = 3,
+          Author = authors[0],
           Category = categories[2],
           Tags = new List<Tag>(){tags[1], tags[2], tags[3], tags[4], tags[5] }
         },
@@ -174,8 +174,8 @@ namespace TatBlog.Data.Seeders
           Published = true,
           PostedDate = new DateTime(2021,5,30,10,20,0),
           ModifiedDate = null,
-          ViewCount = 200,
-          Author = authors[2],
+          ViewCount = 4,
+          Author = authors[1],
           Category = categories[2],
           Tags = new List<Tag>(){tags[1], tags[2], tags[3], tags[4], tags[5] }
         },
@@ -188,8 +188,8 @@ namespace TatBlog.Data.Seeders
           Published = true,
           PostedDate = new DateTime(2022,9,30,10,20,0),
           ModifiedDate = null,
-          ViewCount = 250,
-          Author = authors[3],
+          ViewCount = 5,
+          Author = authors[1],
           Category = categories[2],
           Tags = new List<Tag>(){tags[1], tags[2], tags[3], tags[4], tags[5] }
         },
@@ -202,8 +202,8 @@ namespace TatBlog.Data.Seeders
           Published = true,
           PostedDate = new DateTime(2021,2,20,10,20,0),
           ModifiedDate = null,
-          ViewCount = 200,
-          Author = authors[2],
+          ViewCount = 6,
+          Author = authors[1],
           Category = categories[2],
           Tags = new List<Tag>(){tags[1], tags[2], tags[3], tags[4], tags[5] }
         },
@@ -217,7 +217,7 @@ namespace TatBlog.Data.Seeders
           PostedDate = new DateTime(2022,6,30,10,20,0),
           ModifiedDate = null,
           ViewCount = 200,
-          Author = authors[2],
+          Author = authors[0],
           Category = categories[2],
           Tags = new List<Tag>(){tags[1], tags[2], tags[3], tags[4], tags[5] }
         },
@@ -231,7 +231,7 @@ namespace TatBlog.Data.Seeders
           PostedDate = new DateTime(2022,5,12,10,20,0),
           ModifiedDate = null,
           ViewCount = 200,
-          Author = authors[4],
+          Author = authors[0],
           Category = categories[2],
           Tags = new List<Tag>(){tags[1], tags[2], tags[3], tags[4], tags[5] }
         },

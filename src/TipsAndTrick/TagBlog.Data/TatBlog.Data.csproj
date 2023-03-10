@@ -7,6 +7,11 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Migrations\20230309071429_InitialCreate.cs" />
+    <Compile Remove="Migrations\20230309071429_InitialCreate.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\TagBlog.Core\TatBlog.Core.csproj" />
   </ItemGroup>
 

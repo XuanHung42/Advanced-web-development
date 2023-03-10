@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using TatBlog.Core.Contracts;
 using TatBlog.Core.DTO;
@@ -112,7 +113,7 @@ namespace TatBlog.Services.Blogs
         //Lay danh sach tu khoa va phan trang theo cac tham so pagingParams
    
 
-        async Task<IPagedList.IPagedList<TagItem>> IBlogResponsitory.GetPagedTagsAsync(IPagingParams pagingParams, CancellationToken cancellationToken)
+        async Task<IPagedList<TagItem>> IBlogResponsitory.GetPagedTagsAsync(IPagingParams pagingParams, CancellationToken cancellationToken)
         {
             var tagQuery = _context.Set<Tag>()
                  .Select(x => new TagItem()
@@ -220,10 +221,7 @@ namespace TatBlog.Services.Blogs
             }
 		}
 
-		public Task<Post> FindPostByPostQueryAsync(PostQuery postQuery, CancellationToken cancellationToken = default)
-		{
-			throw new NotImplementedException();
-		}
+	
 
 		public async Task<bool> ChangedPublishedPostAsync(int id, bool published, CancellationToken cancellationToken = default)
 		{
@@ -238,7 +236,7 @@ namespace TatBlog.Services.Blogs
 
 		}
 
-		public Task<IPagedList.IPagedList<Post>> FindAndPagedPostAsync(PostQuery query, IPagingParams pagingParams, CancellationToken cancellationToken = default)
+		public Task<IPagedList<Post>> FindAndPagedPostAsync(PostQuery query, IPagingParams pagingParams, CancellationToken cancellationToken = default)
 		{
 			throw new NotImplementedException();
 		}
@@ -246,7 +244,13 @@ namespace TatBlog.Services.Blogs
 		{
 			IQueryable<Post> posts = _context.Set<Post>()
 				.Include(x => x.Category)
-				.Include(x => x.Tags);
+				.Include(x => x.Tags)
+                .Include(x=> x.Author);
+
+            if(condition.AuthorId > 0)
+            {
+                posts = posts.Where(x => x.AuthorId  == condition.AuthorId);
+            }
 
 			if (condition.PublishedOnly)
 			{
@@ -303,7 +307,7 @@ namespace TatBlog.Services.Blogs
 		public async Task<IPagedList<Post>> GetPagedPostsAsync(
 		PostQuery condition,
 		int pageNumber = 1,
-		int pageSize = 10,
+		int pageSize = 5,
 		CancellationToken cancellationToken = default)
 		{
 			return await FilterPosts(condition).ToPagedListAsync(
@@ -311,5 +315,19 @@ namespace TatBlog.Services.Blogs
 				nameof(Post.PostedDate), "DESC",
 				cancellationToken);
 		}
+
+		public async Task<Category> FindCategoriesBySlugAsync(string slug, CancellationToken cancellation = default)
+		{
+            IQueryable<Category> query = _context.Set<Category>();
+
+            if (!string.IsNullOrEmpty(slug))
+            {
+                query = query.Where(c => c.UrlSlug == slug);
+            }
+
+            return await query.FirstOrDefaultAsync(cancellation);
+        }
+    }
+
 	}
-}
+
