@@ -60,11 +60,12 @@ namespace TatBlog.Services.Blogs
 			     Author  authorsTop = _context.Set<Author>()
 				.Include(a => a.Posts)
 				.OrderByDescending(a => a.Posts.Count(p => p.Published)).First();
+			int top = authorsTop.Posts.Count(p => p.Published);
 			return await _context.Set<Author>()
 				.Include(a=> a.Posts)
-				.Where(a=> a.Posts.Count(p=> p.Published)== authorsTop.Posts.Count(p=> p.Published))
+				.Where(a=> a.Posts.Count(p=> p.Published)== top )
 				.Take(n).ToPagedListAsync(pagingParams, cancellationToken);
-				;
+				
 		}
 
 		public async Task<bool> IsAuthorExistBySlugAsync(int id, string slug, CancellationToken cancellationToken)

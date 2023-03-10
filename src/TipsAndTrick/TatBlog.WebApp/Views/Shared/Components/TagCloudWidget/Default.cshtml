@@ -1,8 +1,8 @@
-﻿@model IList<Post>
+﻿@model IList<TagItem>
 
 	<div class="mb-4">
 		<h3 class="text-success mb-2">
-			Bài viết nhiều lượt xem
+			Tag Cloud
 		</h3>
 		<ul class ="list-group">
 		@foreach(var item in Model)
@@ -11,12 +11,10 @@
 				<a asp-controller="Blog"
 				asp-action="Post"
 				asp-route-slug="@item.UrlSlug"
-			   asp-route-year="@item.PostedDate.Year"
-			   asp-route-slug="@item.PostedDate.Month"
 			   
 			   title="@item.Description">
-			@item.Title
-			<span>(@item.ViewCount)</span>
+			@item.Name
+			<span>(@item.Id)</span>
 		</a>
 			</li>
 		}

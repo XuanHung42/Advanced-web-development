@@ -1,22 +1,19 @@
-﻿@model IList<Post>
+﻿@model IPagedList<Author>
 
 	<div class="mb-4">
 		<h3 class="text-success mb-2">
-			Bài ngẫu nhiên
+			Các tác giả nhiều lượt xem
 		</h3>
 		<ul class ="list-group">
 		@foreach(var item in Model)
 		{
 			<li class="list-group-item">
 				<a asp-controller="Blog"
-				asp-action="Post"
+				asp-action="Author"
 				asp-route-slug="@item.UrlSlug"
-			   asp-route-year="@item.PostedDate.Year"
-			   asp-route-slug="@item.PostedDate.Month"
-			   
-			   title="@item.Description">
-			@item.Title
-			<span>(@item.ViewCount)</span>
+				title="@item.UrlSlug">
+			@item.FullName
+			<span>(@item.Id)</span>
 		</a>
 			</li>
 		}
