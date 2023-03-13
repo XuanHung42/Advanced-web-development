@@ -248,6 +248,58 @@ namespace TatBlog.Data.Seeders
             return posts;
         }
 
+        private IList<Comment> AddComments(IList<Post> posts)
+        {
+            var comments = new List<Comment>()
+            {
+                new(){
+                
+                    Email= "nguyenxuanhung123@gmail.com",
+                    UserName= "Hung123",
+                    Post= posts[1],
+                    CommentDate= new DateTime(2023,1,1,0,0,0 ),
+                    Content="Nice..."
+
+                },
+					 new(){
+
+					Email= "messi10@gmail.com",
+					UserName= "m10",
+					Post= posts[2],
+					CommentDate= new DateTime(2023,1,1,0,0,0 ),
+					Content="No Siu"
+
+				},
+						  new(){
+
+					Email= "ronaldo7@gmail.com",
+					UserName= "cr7",
+					Post= posts[1],
+					CommentDate= new DateTime(2023,1,1,0,0,0 ),
+					Content="Siuuuuu"
+
+				},
+                new(){
+
+					Email= "neymar11@gmail.com",
+					UserName= "n11",
+					Post= posts[1],
+					CommentDate= new DateTime(2023,1,1,0,0,0 ),
+					Content="This is really helpful"
+
+				}
+			};
+
+            foreach(var comment in comments)
+            {
+                if (!_dbContext.Comments.Any(m => m.Email == comment.Email && m.Content == comment.Content && m.PostId == comment.Id))
+                {
+                    _dbContext.Comments.Add(comment);
+                };
+            }
+            _dbContext.SaveChanges();
+            return comments;
+        }
        
     }
 }
