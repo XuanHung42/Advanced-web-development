@@ -4,12 +4,13 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TatBlog.Core.Entities;
 
 namespace TatBlog.Core.DTO
 {
 	public class PostQuery
 	{
-
+		public string Keyword { get; set; }
 		public bool PublishedOnly { get; set; }
 
 		public bool NotPublished { get; set; }
@@ -20,12 +21,13 @@ namespace TatBlog.Core.DTO
 		public string TagSlug { get; set; }
 		public string TitleSlug { get; set; }
 		public string CategoryName { get; set; }
-		public string Keyword { get; set; }
+		
 
 		public int? Year { get; set; }
 
 		public int? Month { get; set; }
 		public string UrlSlug { get; set; }
-		
+		public IList<Author> AuthorList { get; set; }
+		public IList<Comment> CategoryList { get; set; }
 	}
 }

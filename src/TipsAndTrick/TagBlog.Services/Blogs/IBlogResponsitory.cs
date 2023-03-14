@@ -54,6 +54,10 @@ namespace TatBlog.Services.Blogs
         Task<IList<Post>> RandomPosts(int r,CancellationToken cancellationToken = default);
         Task<IList<AuthorItem>> GetAuthorsAsync(CancellationToken cancellationToken = default);
 
+        Task<Post> GetPostbyIdAsync(int id,bool isPublished ,CancellationToken cancellationToken = default);
+        Task<Post> CreateOrUpdatePostAsync(
+        Post post, IEnumerable<string> tags,
+        CancellationToken cancellationToken = default);
 
 	}
 
