@@ -52,6 +52,9 @@ namespace TatBlog.Services.Blogs
         Task<IPagedList<Post>> GetPagedPostsAsync(PostQuery query, int pageNumber,int pageSize ,CancellationToken cancellationToken = default);
 
         Task<IList<Post>> RandomPosts(int r,CancellationToken cancellationToken = default);
-    }
+        Task<IList<AuthorItem>> GetAuthorsAsync(CancellationToken cancellationToken = default);
+
+
+	}
 
 }

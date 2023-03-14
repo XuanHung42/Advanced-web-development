@@ -178,8 +178,23 @@ namespace TatBlog.Services.Blogs
                 PostCount = x.Posts.Count(x => x.Published)
             }).ToListAsync(cancellationToken);
         }
-        //Tim the Tag bang ID
-        public async Task<Tag> FindTagWithIdAsync(int id, CancellationToken cancellationToken = default)
+		public async Task<IList<AuthorItem>> GetAuthorsAsync(CancellationToken cancellationToken = default)
+		{
+			IQueryable<Author> authors = _context.Set<Author>();
+			return await authors.Select(x => new AuthorItem()
+			{
+				Id = x.Id,
+				FullName = x.FullName,
+				Email = x.Email,
+				UrlSlug = x.UrlSlug,
+				ImageUrl = x.ImageUrl,
+                JoinDate = x.JoinDate,
+                PostCount = x.Posts.Count(x => x.Published)
+
+			}).ToListAsync(cancellationToken);
+		}
+		//Tim the Tag bang ID
+		public async Task<Tag> FindTagWithIdAsync(int id, CancellationToken cancellationToken = default)
         {
             IQueryable<Tag> tagQuery = _context.Set<Tag>().Where(x=> x.Id== id);
             return await tagQuery.FirstOrDefaultAsync(cancellationToken);

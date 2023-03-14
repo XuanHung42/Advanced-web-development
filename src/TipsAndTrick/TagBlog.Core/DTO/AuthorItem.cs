@@ -14,5 +14,7 @@ namespace TatBlog.Core.DTO
 		public string ImageUrl { get; set; }
 		public string Email { get; set; }
 		public string Notes { get; set; }
+		public int PostCount { get; set; }
+		public DateTime JoinDate { get; set; }
 	}
 }
