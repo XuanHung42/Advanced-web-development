@@ -59,7 +59,8 @@
 					<partial name="_TagList" model="@Model.Tags" />
 				</div>
 				<div class="text-end">
-					<a asp-controller="Blog"
+					<a asp-area=""
+						asp-controller="Blog"
 					asp-action="Post"
 					asp-route-year = "@Model.PostedDate.Year"
 					asp-route-month="@Model.PostedDate.Month"

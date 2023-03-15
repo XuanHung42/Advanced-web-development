@@ -28,7 +28,8 @@
 					
 				</h5>
 					<span class="text-primary">
-						<a asp-controller="Blog"
+						<a asp-area=""
+							asp-controller="Blog"
 						   asp-action="Author"
 						   asp-route-slug="@Model.Author.UrlSlug"
 						   class="text-decoration-none">@Model.Author.FullName</a>
@@ -39,7 +40,8 @@
 					</small>
 
 					<span class="text-primary">
-						<a asp-controller="Blog"
+					<a asp-area=""
+							asp-controller="Blog"
 						   asp-action="Category"
 						   asp-route-slug="@Model.Category.UrlSlug"
 						   class="text-decoration-none">@Model.Category.Name</a>

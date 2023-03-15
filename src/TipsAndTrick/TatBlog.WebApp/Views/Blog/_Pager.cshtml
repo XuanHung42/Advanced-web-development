@@ -26,6 +26,7 @@
 		@if (Model.HasPreviousPage)
 		{
 			<a asp-controller="Blog"
+				asp-area=""
 				asp-action="@actionName"
 				asp-route-slug="@slug"
 				asp-route-k ="@postQuery.Keyword"
@@ -50,6 +51,7 @@
 		{
 			<a asp-controller="Blog"
 	   asp-action="@actionName"
+	   asp-area=""
 	   asp-route-slug="@slug"
 	   asp-route-k="@postQuery.Keyword"
 	   asp-route-p="@(Model.PageNumber +1)"

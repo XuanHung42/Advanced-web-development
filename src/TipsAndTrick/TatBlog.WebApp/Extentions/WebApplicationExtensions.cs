@@ -1,7 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using TatBlog.Data.Contexts;
 using TatBlog.Data.Seeders;
 using TatBlog.Services.Blogs;
+using TatBlog.Services.Media;
+using TatBlog.WebApp.Middlewares;
 
 namespace TatBlog.WebApp.Extensions
 {
@@ -27,10 +30,19 @@ namespace TatBlog.WebApp.Extensions
 			builder.Services.AddScoped<IBlogResponsitory, BLogResponsitory>();
 			builder.Services.AddScoped< IAuthorResponsitory, AuthorResponsitory>();
 			builder.Services.AddScoped<IDataSeeder, DataSeeder>();
+			builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
 			return builder;
 		}
 
-		public static WebApplication UseRequestPipeline(
+		public static WebApplicationBuilder ConfigureNLog(this WebApplicationBuilder builder)
+		{
+			builder.Logging.ClearProviders();
+			builder.Host.UseNLog();
+			return builder;
+		}
+
+
+        public static WebApplication UseRequestPipeline(
 		  this WebApplication app)
 		{
 			if (app.Environment.IsDevelopment())
@@ -51,6 +63,8 @@ namespace TatBlog.WebApp.Extensions
 			app.UseStaticFiles();
 
 			app.UseRouting();
+
+			app.UseMiddleware<UserActivityMiddleware>();
 			return app;
 		}
 

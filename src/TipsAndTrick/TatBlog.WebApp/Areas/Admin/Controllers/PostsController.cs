@@ -1,4 +1,6 @@
-﻿using MapsterMapper;
+﻿using FluentValidation;
+using FluentValidation.AspNetCore;
+using MapsterMapper;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -6,7 +8,9 @@ using TatBlog.Core.Contracts;
 using TatBlog.Core.DTO;
 using TatBlog.Core.Entities;
 using TatBlog.Services.Blogs;
+using TatBlog.Services.Media;
 using TatBlog.WebApp.Areas.Admin.Models;
+using TatBlog.WebApp.Validations;
 
 namespace TatBlog.WebApp.Areas.Admin.Controllers
 {
@@ -14,11 +18,15 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
 	{
 		private readonly IBlogResponsitory _blogResponsitory;
 		private readonly IMapper _mapper;
+		private readonly IMediaManager _mediaManager;
+		private readonly ILogger<PostsController> _logger;
 
-        public PostsController(IBlogResponsitory blogResponsitory, IMapper mapper)
+        public PostsController(IBlogResponsitory blogResponsitory, IMapper mapper, IMediaManager mediaManager, ILogger<PostsController> logger)
         {
             _blogResponsitory = blogResponsitory;
             _mapper = mapper;
+            _mediaManager = mediaManager;
+            _logger = logger;
         }
 
         private async Task PopulatePostFilterModelAsync(PostFilterModel model)
@@ -69,8 +77,12 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit(PostEditModel model)
+		public async Task<IActionResult> Edit( IValidator<PostEditModel> postValidator, PostEditModel model)
 		{
+			var validationResult = await postValidator.ValidateAsync(model);
+			if(!validationResult.IsValid) {
+				validationResult.AddToModelState(ModelState);
+			}
 			if (!ModelState.IsValid)
 			{
 				await PopulatePostEditModelAsync(model);
@@ -85,6 +97,19 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
 				post.Id = 0;
 				post.PostedDate = DateTime.Now;  
 			}
+
+			if(model.ImageFile?.Length >0) {
+				var newImagePath = await _mediaManager.SaveFileAsync(
+					model.ImageFile.OpenReadStream(),
+					model.ImageFile.FileName,
+					model.ImageFile.ContentType);
+				if(!string.IsNullOrEmpty(newImagePath))
+				{
+					await _mediaManager.DeleteFileAsync(post.ImageUrl);
+					post.ImageUrl = newImagePath;
+				}
+			}
+
 			await _blogResponsitory.CreateOrUpdatePostAsync(post, model.GetSelectedTags());
 			return RedirectToAction(nameof(Index));
 			
@@ -119,9 +144,15 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
 
         public async Task<IActionResult> Index(PostFilterModel model)
 		{
+			_logger.LogInformation("Tạo điền kiện truy vấn");
+			
 			var postQuery = _mapper.Map<PostQuery>(model);
+			_logger.LogInformation("Lấy danh sách bài viết từ CSDL");
+			
 			ViewBag.PostsList = await _blogResponsitory.GetPagedPostsAsync(postQuery, 1, 10);
-			await PopulatePostFilterModelAsync(model);
+            _logger.LogInformation("Chuẩn bị dữ liệu vào cho ViewModel");
+
+            await PopulatePostFilterModelAsync(model);
 			return View(model);
 		}
 

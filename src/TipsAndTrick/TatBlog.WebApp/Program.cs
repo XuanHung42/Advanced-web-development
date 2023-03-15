@@ -1,11 +1,14 @@
 using TatBlog.WebApp.Extensions;
 using TatBlog.WebApp.Mapsters;
+using TatBlog.WebApp.Validations;
 
 var builder = WebApplication.CreateBuilder(args);
 {
 	builder.ConfigureMvc()
 		.ConfigureServices()
-		.ConfigureMapster();
+		.ConfigureMapster()
+		.ConfigureFluentValidation()
+		.ConfigureNLog();
 
 }
 
