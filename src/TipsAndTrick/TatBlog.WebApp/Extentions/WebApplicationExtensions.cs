@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using FluentValidation.AspNetCore;
+using Microsoft.EntityFrameworkCore;
 using NLog.Web;
 using TatBlog.Data.Contexts;
 using TatBlog.Data.Seeders;
@@ -31,6 +32,7 @@ namespace TatBlog.WebApp.Extensions
 			builder.Services.AddScoped< IAuthorResponsitory, AuthorResponsitory>();
 			builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 			builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
+			
 			return builder;
 		}
 

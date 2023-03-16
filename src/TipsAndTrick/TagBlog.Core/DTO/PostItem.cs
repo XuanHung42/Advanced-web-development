@@ -19,7 +19,8 @@ namespace TatBlog.Core.DTO
         public int ViewCount { get; set; }
         public bool Published { get; set; }
 		public DateTime PostedDate { get; set; }
-        public IList<Tag> Tags { get; set; }
+		public DateTime? ModifiedDate { get; set; }
+		public IList<Tag> Tags { get; set; }
         public IList<Comment> Comments { get; set; }
     }
 }

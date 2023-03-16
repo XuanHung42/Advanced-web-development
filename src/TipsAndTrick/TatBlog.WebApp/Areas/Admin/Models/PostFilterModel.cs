@@ -30,7 +30,8 @@ namespace TatBlog.WebApp.Areas.Admin.Models
 						Value = x.ToString(),
 						Text = CultureInfo.CurrentCulture
 								.DateTimeFormat.GetMonthName(x)
-					}).ToList();
+					})
+					.ToList();
 		}
 
 	}

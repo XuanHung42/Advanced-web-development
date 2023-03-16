@@ -58,6 +58,10 @@ namespace TatBlog.Services.Blogs
         Task<Post> CreateOrUpdatePostAsync(
         Post post, IEnumerable<string> tags,
         CancellationToken cancellationToken = default);
+        Task<Post> FindPostByIdAsync(
+    int id,
+     CancellationToken cancellationToken = default
+);
 
 	}
 

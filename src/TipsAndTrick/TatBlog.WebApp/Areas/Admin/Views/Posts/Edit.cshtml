@@ -141,6 +141,8 @@
             <input type="file"
                    class="form-control"
                    asp-for="ImageFile" />
+            <span asp-validation-for="ImageFile"
+                  class="text-danger"></span>
         </div>
     </div>
 
@@ -163,7 +165,7 @@
         <a asp-area="Admin"
            asp-controller="Posts"
            asp-action="Index"
-           class="btn btn-danget">
+           class="btn btn-danger">
             Hủy & Quay lại
         </a>
     </div>

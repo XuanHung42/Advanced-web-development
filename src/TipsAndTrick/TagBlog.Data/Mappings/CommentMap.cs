@@ -25,11 +25,11 @@ namespace TatBlog.Data.Mappings
 				.HasMaxLength(100);
 			builder.Property(m => m.CommentDate)
 				.HasColumnType("datetime");
-			builder.HasOne(m => m.Post)
-				.WithMany(p => p.Comments)
-				.HasForeignKey(m => m.PostId)
-				.HasConstraintName("FK_Comments_Post")
-				.OnDelete(DeleteBehavior.Restrict);
+			//builder.HasOne(m => m.Post)
+			//	.WithMany(p => p.Comments)
+				//.HasForeignKey(m => m.PostId)
+				//.HasConstraintName("FK_Comments_Post")
+				//.OnDelete(DeleteBehavior.Restrict);
 
 
 		}

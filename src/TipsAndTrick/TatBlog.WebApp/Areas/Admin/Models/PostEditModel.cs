@@ -4,7 +4,6 @@ using Microsoft.Build.Framework;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using TatBlog.Core.Entities;
-using Xunit.Sdk;
 using RequiredAttribute = System.ComponentModel.DataAnnotations.RequiredAttribute;
 
 namespace TatBlog.WebApp.Areas.Admin.Models
@@ -26,9 +25,8 @@ namespace TatBlog.WebApp.Areas.Admin.Models
 
         public string Meta { get; set; }
         [DisplayName("Slug")]
-        [Remote("VerifyPostSlug", "Posts", "Admin", HttpMethod ="POST", AdditionalFields ="Id")]
-
-        public string UrlSlug { get; set; }
+		[Remote("VerifyPostSlug", "Posts", "Admin", HttpMethod ="POST", AdditionalFields ="Id")]
+		public string UrlSlug { get; set; }
         [DisplayName("Chọn hình ảnh")]
         public IFormFile ImageFile { get; set; }
         [DisplayName("Hình hiện tại")]

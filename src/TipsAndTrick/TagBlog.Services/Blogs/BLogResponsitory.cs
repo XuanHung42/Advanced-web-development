@@ -430,8 +430,20 @@ namespace TatBlog.Services.Blogs
 
 		return post;
 	}
+		public async Task<Post> FindPostByIdAsync(
+    int id,
+     CancellationToken cancellationToken = default
+)
+		{
+			return await _context.Set<Post>()
+			  .Include(p => p.Tags)
+			  .Include(p => p.Author)
+			  .Include(p => p.Category)
+			  .Where(p => p.Id == id)
+			  .FirstOrDefaultAsync(cancellationToken);
+		}
 
 
-    }
+	}
 	}
 

@@ -2,16 +2,18 @@
 using FluentValidation.AspNetCore;
 using System.Reflection;
 
-namespace TatBlog.WebApp.Validations
+namespace TatBlog.WebApp.Validations;
+
+public static class FluentValidationDependencyInjection
 {
-    public static class FluentValidationDependencyInjection
+
+    public static WebApplicationBuilder ConfigureFluentValidation(this WebApplicationBuilder builder)
     {
-        public static WebApplicationBuilder ConfigureFluentValidation(this WebApplicationBuilder builder)
-        {
-            builder.Services.AddFluentValidationClientsideAdapters();
-            builder.Services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
-            return builder;
-        }
-        
+        builder.Services.AddFluentValidationClientsideAdapters();
+
+        builder.Services.AddValidatorsFromAssembly(
+            Assembly.GetExecutingAssembly());
+
+        return builder;
     }
 }

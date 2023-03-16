@@ -77,13 +77,15 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
 		}
 
 		[HttpPost]
-		public async Task<IActionResult> Edit( IValidator<PostEditModel> postValidator, PostEditModel model)
+		public async Task<IActionResult> Edit([FromServices] IValidator<PostEditModel> postValidator, PostEditModel model)
 		{
-			var validationResult = await postValidator.ValidateAsync(model);
-			if(!validationResult.IsValid) {
-				validationResult.AddToModelState(ModelState);
-			}
-			if (!ModelState.IsValid)
+            var validationResult = await postValidator.ValidateAsync(model);
+
+            if (!validationResult.IsValid)
+            {
+                validationResult.AddToModelState(ModelState);
+            }
+            if (!ModelState.IsValid)
 			{
 				await PopulatePostEditModelAsync(model);
 				return View(model);
@@ -103,7 +105,7 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
 					model.ImageFile.OpenReadStream(),
 					model.ImageFile.FileName,
 					model.ImageFile.ContentType);
-				if(!string.IsNullOrEmpty(newImagePath))
+				if(!string.IsNullOrWhiteSpace(newImagePath))
 				{
 					await _mediaManager.DeleteFileAsync(post.ImageUrl);
 					post.ImageUrl = newImagePath;
