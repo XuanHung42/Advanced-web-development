@@ -144,20 +144,34 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
             });
         }
 
-        public async Task<IActionResult> Index(PostFilterModel model)
+        public async Task<IActionResult> Index(PostFilterModel model, [FromQuery(Name = "p")] int pageNumber=1, 
+			[FromQuery(Name ="ps")] int pageSize=5)
 		{
 			_logger.LogInformation("Tạo điền kiện truy vấn");
 			
 			var postQuery = _mapper.Map<PostQuery>(model);
 			_logger.LogInformation("Lấy danh sách bài viết từ CSDL");
 			
-			ViewBag.PostsList = await _blogResponsitory.GetPagedPostsAsync(postQuery, 1, 10);
+			ViewBag.PostsList = await _blogResponsitory.GetPagedPostsAsync(postQuery, pageNumber, pageSize);
             _logger.LogInformation("Chuẩn bị dữ liệu vào cho ViewModel");
 
             await PopulatePostFilterModelAsync(model);
 			return View(model);
 		}
+        public async Task<IActionResult> ChangePublishPost(int id)
+        {
+            await _blogResponsitory.ChangedPublishedPostAsync(id);
+            return RedirectToAction("Index");
+        }
+
+        // delete post
+        public async Task<IActionResult> DeletePost(int id)
+        {
+            await _blogResponsitory.DeletePostById(id);
+            return RedirectToAction("Index");
+
+        }
 
 
-	}
+    }
 }

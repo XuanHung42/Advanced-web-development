@@ -47,7 +47,7 @@ namespace TatBlog.Services.Blogs
 		Task<Category> FindCategoryWithIdAsync(int id, CancellationToken cancellationToken = default);
         Task<bool> DeleteCategoryWithSlugAsync(string slug, CancellationToken cancellationToken);
         Task<bool> IsCategoryExistSlugAsync(string slug, CancellationToken cancellationToken = default);
-        Task<bool> ChangedPublishedPostAsync(int id, bool published, CancellationToken cancellationToken = default);
+        Task ChangedPublishedPostAsync(int id,  CancellationToken cancellationToken = default);
         Task<IPagedList<Post>> FindAndPagedPostAsync(PostQuery query, IPagingParams pagingParams, CancellationToken cancellationToken = default);
         Task<IPagedList<Post>> GetPagedPostsAsync(PostQuery query, int pageNumber,int pageSize ,CancellationToken cancellationToken = default);
 
@@ -62,7 +62,8 @@ namespace TatBlog.Services.Blogs
     int id,
      CancellationToken cancellationToken = default
 );
-
-	}
+        Task<bool> DeletePostById(int id, CancellationToken cancellationToken = default);
+    }
+   
 
 }

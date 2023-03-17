@@ -240,16 +240,10 @@ namespace TatBlog.Services.Blogs
 
 
 
-        public async Task<bool> ChangedPublishedPostAsync(int id, bool published, CancellationToken cancellationToken = default)
+        public async Task ChangedPublishedPostAsync(int id, CancellationToken cancellationToken = default)
         {
-            var post = await _context.Set<Post>().FindAsync(id);
-            if (post is null)
-            {
-                return false;
-            }
-            post.Published = !post.Published;
-            await _context.SaveChangesAsync(cancellationToken);
-            return post.Published;
+            await _context.Set<Post>().Where(x => x.Id == id)
+            .ExecuteUpdateAsync(p => p.SetProperty(x => x.Published, x => !x.Published), cancellationToken);
 
         }
 
@@ -442,8 +436,16 @@ namespace TatBlog.Services.Blogs
 			  .Where(p => p.Id == id)
 			  .FirstOrDefaultAsync(cancellationToken);
 		}
+        public async Task<bool> DeletePostById(int id, CancellationToken cancellationToken = default)
+        {
+            var delPostId = await _context.Set<Post>()
+                .Include(p => p.Tags).Where(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
+            _context.Set<Post>().Remove(delPostId);
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
 
 
-	}
+    }
 	}
 

@@ -1,7 +1,11 @@
-﻿@model TatBlog.WebApp.Areas.Admin.Models.PostFilterModel
+﻿@using TatBlog.WebApp.Areas.Admin.Models;
+@model TatBlog.WebApp.Areas.Admin.Models.PostFilterModel 
+ 
 @{
-	ViewData["PageTitle"] = "Danh sách bài viết";
-	var postsList = ViewBag.PostsList as IPagedList<Post>;
+    ViewData["PageTitle"] = "Danh sách bài viết";
+    var postsList = ViewBag.PostsList as IPagedList<Post>;
+    var postsEdit = ViewBag.PostsEdit as PostEditModel;
+
 }
 <h1>
 Danh sách bài viết
@@ -16,6 +20,7 @@ Danh sách bài viết
                 <th>Tác giả</th>
                 <th>Chủ đề</th>
                 <th>Xuất bản</th>
+                <th> Xóa</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +46,41 @@ Danh sách bài viết
                         @post.Category.Name
                     </td>
                     <td>
-                        @(post.Published ? "Có" : "Không")
+                        <a class="btn"
+                   asp-area="Admin"
+                   asp-controller="Posts"
+                   asp-action="ChangePublishPost"
+                   asp-route-id="@post.Id">
+                            @if (post.Published)
+                            {
+                                @*<i class="fa fa-unlock"></i>*@
+                                <i class="fa fa-check" style="color:green"></i>
+                                <span style="color: green">Công khai</span>
+                            }
+                            else
+                            {
+                                <i class="fa fa-times" style="color:black"></i>
+                                <span style="color:black">Riêng tư</span>
+                            }
+                        </a>
+                       @* <partial name="CheckPublish" model="@postsEdit">*@
+                        @*<div class="form-check">
+                            <input class="form-check-input"
+                           type="checkbox"
+                           asp-for="@post.Published" />
+                            <label class="form-check-label"
+                           asp-for="@post.Published"></label>
+                        </div>*@
+                        @*@*(post.Published ? "Có" : "Không")*@
+                    </td>
+                    <td>
+                        <a class="btn"
+                   asp-area="Admin"
+                   asp-controller="Posts"
+                   asp-action="DeletePost"
+                   asp-route-id="@post.Id">
+                            <i class="fa fa-trash" style="color:red"></i>
+                        </a>
                     </td>
                 </tr>
             }
@@ -54,3 +93,4 @@ else
         Không tìm thấy bài viết nào
     </h1>
 }
+<partial name="_Pager" model="@postsList" />
