@@ -63,6 +63,11 @@ namespace TatBlog.Services.Blogs
      CancellationToken cancellationToken = default
 );
         Task<bool> DeletePostById(int id, CancellationToken cancellationToken = default);
+        Task<IPagedList<Author>> GetPageAuthorAsync(
+AuthorQuery condition,
+int pageNumber = 1,
+int pageSize = 5,
+CancellationToken cancellationToken = default);
     }
    
 

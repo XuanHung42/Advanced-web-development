@@ -21,5 +21,8 @@ namespace TatBlog.Services.Blogs
 		Task<Author> UpdateAuthorAsync(Author author, CancellationToken cancellationToken = default);
 		Task<IPagedList<Author>> GetAuthorTopPostAsync(int n, IPagingParams pagingParams, CancellationToken cancellationToken = default);
 		Task<bool> IsAuthorExistBySlugAsync(int id, string slug, CancellationToken cancellationToken =default);
-	}
+		Task<bool> DeleteAuthorById(int id, CancellationToken cancellationToken = default);
+
+
+    }
 }

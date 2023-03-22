@@ -72,6 +72,13 @@ namespace TatBlog.Services.Blogs
 		{
 			return await _context.Set<Author>().AnyAsync( a => a.Id != id && a.UrlSlug == slug, cancellationToken);
 		}
-
-	}
+        public async Task<bool> DeleteAuthorById(int id, CancellationToken cancellationToken = default)
+        {
+            var delAuthorId = await _context.Set<Author>()
+                .Where(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
+            _context.Set<Author>().Remove(delAuthorId);
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+    }
 }

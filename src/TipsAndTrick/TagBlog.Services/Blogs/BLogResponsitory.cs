@@ -338,6 +338,31 @@ namespace TatBlog.Services.Blogs
                 nameof(Post.PostedDate), "DESC",
                 cancellationToken);
         }
+        public async Task<IPagedList<Author>> GetPageAuthorAsync(
+       AuthorQuery condition,
+       int pageNumber = 1,
+       int pageSize = 5,
+       CancellationToken cancellationToken = default)
+        {
+            return await FilterAuthor(condition).ToPagedListAsync(
+                pageNumber, pageSize,
+                nameof(Author.Id), "DESC",
+                cancellationToken);
+        }
+
+        private IQueryable<Author> FilterAuthor(AuthorQuery condition)
+        {
+            IQueryable<Author> authors = _context.Set<Author>();
+            if (!string.IsNullOrWhiteSpace(condition.Keyword))
+            {
+                authors= authors.Where(a=> 
+                                            a.Notes.Contains(condition.Keyword)||
+                                            a.FullName.Contains(condition.Keyword)|| 
+                                         a.Email.Contains(condition.Keyword));
+
+            }
+            return authors;
+        }
 
         public async Task<Category> FindCategoriesBySlugAsync(string slug, CancellationToken cancellation = default)
         {
