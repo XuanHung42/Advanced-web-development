@@ -1,20 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.ComponentModel;
 
-namespace TatBlog.Core.DTO
+namespace TatBlog.WebApp.Areas.Admin.Models
 {
-    public class CategoryItem
+    public class CategoryEditModel
     {
         public int Id { get; set; }
+        [DisplayName("Từ khóa ...")]
+
         public string Name { get; set; }
-      
+        public string Keyword { get; set; }
         public string Description { get; set; }
         public string UrlSlug { get; set; }
         public bool ShowMenu { get; set; }
         public int PostCount { get; set; }
-
     }
 }

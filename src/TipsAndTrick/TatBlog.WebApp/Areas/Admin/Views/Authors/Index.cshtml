@@ -1,10 +1,10 @@
-﻿@using TatBlog.WebApp.Areas.Admin.Models;
-@model TatBlog.WebApp.Areas.Admin.Models.AuthorFilterModel;
+﻿@model AuthorFilterModel;
 
 @{
     ViewData["PageTitle"] = "Danh sách tác giả";
-    var authorsList = ViewBag.AuthorsList as IPagedList<Author>;
+    var authorsList = ViewBag.AuthorList as IPagedList<Author>;
 
+   
 
 }
 <h1>
@@ -16,6 +16,7 @@
     <table class="table table-responsive table-striped">
         <thead>
             <tr>
+                <th>Hình đại diện</th>
                 <th>Tên tác giả</th>
                 <th> Xóa</th>
             </tr>
@@ -24,6 +25,23 @@
             @foreach (var author in authorsList)
             {
                 <tr>
+                    <td>
+                        @if (!string.IsNullOrWhiteSpace(author.ImageUrl))
+                        {
+                            <img src="/@author.ImageUrl"
+                     class="img-thumbnail"
+                     style="width:120px;height:150px" />
+                        }
+                        else
+                        {
+                            <img src="~/images/person3.jpg"
+                     class="img-thumbnail" style="width:120px;height:150px" />
+                        }
+                        
+
+                
+                       
+                    </td>
                     <td>
                         <a asp-area="Admin"
                    asp-controller="Authors"
@@ -34,6 +52,9 @@
                         </a>
                         <p class="text-muted">
                             @author.Email
+                        </p>
+                        <p>
+                            Ngày tham gia: <span class="text-muted">@author.JoinDate.ToString("yyyy MMMM dd")</span>
                         </p>
                     </td>
                     

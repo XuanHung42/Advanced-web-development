@@ -104,7 +104,7 @@ namespace TatBlog.Services.Blogs
                     Description = x.Description,
                     UrlSlug = x.UrlSlug,
 
-                    ShowOnMenu = x.ShowMenu,
+                    ShowMenu = x.ShowMenu,
                     PostCount = x.Posts.Count(p => p.Published)
 
                 })
@@ -224,18 +224,10 @@ namespace TatBlog.Services.Blogs
             }
         }
         //Kiem tra Category da ton tai voi dinh danh slug hay chua
-        public async Task<bool> IsCategoryExistSlugAsync(string slug, CancellationToken cancellationToken = default)
+        public async Task<bool> IsCategoryExistSlugAsync( int id,string slug, CancellationToken cancellationToken = default)
         {
-            var categoryExist = await _context.Set<Category>()
-                .Where(c => c.UrlSlug == slug).FirstOrDefaultAsync(cancellationToken);
-            if (categoryExist == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
+            return await _context.Set<Category>()
+                 .AnyAsync(x => x.Id != id && x.UrlSlug == slug, cancellationToken);
         }
 
 
@@ -338,6 +330,17 @@ namespace TatBlog.Services.Blogs
                 nameof(Post.PostedDate), "DESC",
                 cancellationToken);
         }
+        public async Task<IPagedList<Category>> GetPageCategoriesAsync(
+       CategoryQuery condition,
+       int pageNumber = 1,
+       int pageSize = 5,
+       CancellationToken cancellationToken = default)
+        {
+            return await FilterCategory(condition).ToPagedListAsync(
+                pageNumber, pageSize,
+                nameof(Category.Id), "DESC",
+                cancellationToken);
+        }
         public async Task<IPagedList<Author>> GetPageAuthorAsync(
        AuthorQuery condition,
        int pageNumber = 1,
@@ -352,17 +355,35 @@ namespace TatBlog.Services.Blogs
 
         private IQueryable<Author> FilterAuthor(AuthorQuery condition)
         {
-            IQueryable<Author> authors = _context.Set<Author>();
+            IQueryable<Author> authorQuery = _context.Set<Author>();
+
             if (!string.IsNullOrWhiteSpace(condition.Keyword))
             {
-                authors= authors.Where(a=> 
-                                            a.Notes.Contains(condition.Keyword)||
-                                            a.FullName.Contains(condition.Keyword)|| 
-                                         a.Email.Contains(condition.Keyword));
+                authorQuery = authorQuery
+                  .Where(a =>
+                       a.Email.Contains(condition.Keyword)
+                    || a.FullName.Contains(condition.Keyword));
 
             }
-            return authors;
+
+          
+
+            return authorQuery;
         }
+        private IQueryable<Category> FilterCategory(CategoryQuery condition)
+        {
+            IQueryable<Category> category = _context.Set<Category>();
+            if (!string.IsNullOrWhiteSpace(condition.Keyword))
+            {
+                category = category.Where(c=>
+                                            c.Description.Contains(condition.Keyword) ||
+                                            c.Name.Contains(condition.Keyword));
+                    
+
+            }
+            return category;
+        }
+
 
         public async Task<Category> FindCategoriesBySlugAsync(string slug, CancellationToken cancellation = default)
         {
@@ -375,6 +396,19 @@ namespace TatBlog.Services.Blogs
 
             return await query.FirstOrDefaultAsync(cancellation);
         }
+        public async Task<Category> FindCategoriesByIdAsync(int id, bool isDetail = false ,CancellationToken cancellation = default)
+        {
+            if (!isDetail)
+            {
+                return await _context.Set<Category>().FindAsync(id, cancellation);
+            }
+
+
+            return await _context.Set<Category>()
+       
+                .Where(p => p.Id == id)
+                .FirstOrDefaultAsync(cancellation);
+        }
         public async Task<IList<Post>> RandomPosts(
                 int r,
                 CancellationToken cancellationToken = default
@@ -385,82 +419,98 @@ namespace TatBlog.Services.Blogs
               .Take(r)
               .ToListAsync(cancellationToken);
         }
-        public async Task<Post> GetPostbyIdAsync(int id,bool isPublished = false, CancellationToken cancellationToken = default)
+        public async Task<Post> GetPostbyIdAsync(
+            int id,
+            bool isDetail = false,
+            CancellationToken cancellationToken = default)
         {
-			
-			if (!isPublished)
+
+            if (!isDetail)
             {
-                return await _context.Set<Post>().FindAsync(id);
+                return await _context.Set<Post>().FindAsync(id, cancellationToken);
             }
-           
-               
+
+
             return await _context.Set<Post>()
-                .Include(x=> x.Category)
-                .Include(x=> x.Tags)
-                .Include(x=> x.Author)
+                .Include(x => x.Category)
+                .Include(x => x.Tags)
+                .Include(x => x.Author)
+                .Where(p => p.Id == id)
                 .FirstOrDefaultAsync(cancellationToken);
-
-
         }
+        public async Task<Category> CreateOrUpdateCategoryAsync(
+           Category category, CancellationToken cancellationToken = default)
+        {
+            if (_context.Set<Category>().Any(s => s.Id == category.Id))
+            {
+                _context.Entry(category).State = EntityState.Modified;
+            }
+            else
+            {
+                _context.Categories.Add(category);
+            }
 
+            await _context.SaveChangesAsync(cancellationToken);
+            return category;
+        }
         public async Task<Post> CreateOrUpdatePostAsync(
-		Post post, IEnumerable<string> tags, 
-		CancellationToken cancellationToken = default)
-	{
-		if (post.Id > 0)
-		{
-			await _context.Entry(post).Collection(x => x.Tags).LoadAsync(cancellationToken);
-		}
-		else
-		{
-			post.Tags = new List<Tag>();
-		}
+        Post post, IEnumerable<string> tags,
+        CancellationToken cancellationToken = default)
+        {
+            if (post.Id > 0)
+            {
+                await _context.Entry(post).Collection(x => x.Tags).LoadAsync(cancellationToken);
+            }
+            else
+            {
+                post.Tags = new List<Tag>();
+            }
 
-		foreach (var tagName in tags)
-		{
-			if (string.IsNullOrWhiteSpace(tagName)) continue;
-			if (post.Tags.Any(x => x.Name == tagName)) continue;
+            foreach (var tagName in tags)
+            {
+                if (string.IsNullOrWhiteSpace(tagName)) continue;
+                if (post.Tags.Any(x => x.Name == tagName)) continue;
 
-			var tag = await _context.Set<Tag>()
-				.FirstOrDefaultAsync(x => x.Name == tagName, cancellationToken);
+                var tag = await _context.Set<Tag>()
+                    .FirstOrDefaultAsync(x => x.Name == tagName, cancellationToken);
 
-			if (tag == null)
-			{
-				tag = new Tag()
-				{
-					Name = tagName,
-					Description = tagName,
-					UrlSlug = tagName.GenerateSlug()
-				};
+                if (tag == null)
+                {
+                    tag = new Tag()
+                    {
+                        Name = tagName,
+                        Description = tagName,
+                        UrlSlug = tagName.GenerateSlug()
+                    };
 
-			}
-		
-			post.Tags.Add(tag);
-		}
+                }
 
-		post.Tags = post.Tags.Where(t => tags.Contains(t.Name)).ToList();
+                post.Tags.Add(tag);
+            }
 
-		if (post.Id > 0)
-			_context.Update(post);
-		else
-			_context.Add(post);
+            post.Tags = post.Tags.Where(t => tags.Contains(t.Name)).ToList();
 
-		await _context.SaveChangesAsync(cancellationToken);
+            if (post.Id > 0)
+                _context.Update(post);
+            else
+                _context.Add(post);
 
-		return post;
-	}
-		public async Task<Post> FindPostByIdAsync(
+            await _context.SaveChangesAsync(cancellationToken);
+
+            return post;
+        }
+        public async Task<Post> FindPostByIdAsync(
     int id,
      CancellationToken cancellationToken = default
 )
-		{
-			return await _context.Set<Post>()
-			  .Include(p => p.Tags)
-			  .Include(p => p.Author)
-			  .Include(p => p.Category)
-			  .Where(p => p.Id == id)
-			  .FirstOrDefaultAsync(cancellationToken);
-		}
+        {
+            return await _context.Set<Post>()
+              .Include(p => p.Tags)
+              .Include(p => p.Author)
+              .Include(p => p.Category)
+              .Where(p => p.Id == id)
+              .FirstOrDefaultAsync(cancellationToken);
+        }
         public async Task<bool> DeletePostById(int id, CancellationToken cancellationToken = default)
         {
             var delPostId = await _context.Set<Post>()
@@ -469,8 +519,24 @@ namespace TatBlog.Services.Blogs
             await _context.SaveChangesAsync(cancellationToken);
             return true;
         }
+        public async Task<bool> DeleteCategoryById(int id, CancellationToken cancellationToken = default)
+        {
+            var delCateId = await _context.Set<Category>()
+                .Where(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
+            _context.Set<Category>().Remove(delCateId);
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
+        public async Task<bool> DeleteAuthorById(int id, CancellationToken cancellationToken = default)
+        {
+            var delAuthorId = await _context.Set<Author>()
+                .Where(p => p.Id == id).FirstOrDefaultAsync(cancellationToken);
+            _context.Set<Author>().Remove(delAuthorId);
+            await _context.SaveChangesAsync(cancellationToken);
+            return true;
+        }
 
 
     }
-	}
+}
 

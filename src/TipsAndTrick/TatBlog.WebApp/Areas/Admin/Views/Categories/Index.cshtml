@@ -1,6 +1,60 @@
-﻿@{
-	ViewData["PageTitle"] = "Bảng thể loại";
+﻿@model CategoryFilterModel
+
+@{
+    ViewData["PageTitle"] = "Danh sách thể loại";
+    var categoriesList = ViewBag.CategoriesList as IPagedList<Category>;
+
 }
 <h1>
-	Đây là khu vực dành cho người quản trị
+    Danh sách bài viết
 </h1>
+<partial name="_CategoryFilterPane" model="Model" />
+@if (categoriesList != null && categoriesList.Count > 0)
+{
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Tên chủ đề</th>
+               
+                <th> Xóa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var cate in categoriesList)
+            {
+                <tr>
+                    <td>
+                        <a asp-area="Admin"
+                   asp-controller="Categories"
+                   asp-action="Edit"
+                   asp-route-id="@cate.Id"
+                   class="text-bold">
+                            @cate.Name
+                        </a>
+                        <p class="text-muted">
+                            @cate.Description
+                        </p>
+                    </td>
+                   
+                    <td>
+                   
+                        <a class="btn"
+                   asp-area="Admin"
+                   asp-controller="Categories"
+                   asp-action="DeleteCategory"
+                   asp-route-id="@cate.Id">
+                            <i class="fa fa-trash" style="color:red"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <partial name="_Pager" model="@categoriesList" />
+}
+else
+{
+    <h1 class="text-danger">
+        Không tìm thấy bài viết nào
+    </h1>
+}

@@ -47,31 +47,35 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
 		}
 
 		[HttpGet]
-		public async Task<IActionResult> Edit(int id=0)
+		public async Task<IActionResult> Edit(int id = 0)
 		{
 			var post = id > 0
 				? await _blogResponsitory.GetPostbyIdAsync(id, true)
 				: null;
 
+
 			var model = post == null
 				? new PostEditModel()
 				: _mapper.Map<PostEditModel>(post);
-			//var model = _mapper.Map<PostEditModel>(post);
-			//var model = new PostEditModel()
-			//{
-			//	Id = post.Id,
-			//	AuthorId = post.AuthorId,
-			//	CategoryId = post.CategoryId,
-			//	ShortDescription = post.ShortDescription,
-			//	Description = post.Description,
-			//	ImageUrl = post.ImageUrl,
-			//	UrlSlug = post.UrlSlug,
-			//	SelectedTags = string.Join("\r\n", post.Tags.Select(x => x.Name))
-			//};
+
+
+			Console.WriteLine(model.ToString());
+
+            //var model = new PostEditModel()
+            //{
+            //	Id = post.Id,
+            //	AuthorId = post.AuthorId,
+            //	CategoryId = post.CategoryId,
+            //	ShortDescription = post.ShortDescription,
+            //	Description = post.Description,
+            //	ImageUrl = post.ImageUrl,
+            //	UrlSlug = post.UrlSlug,
+            //	SelectedTags = string.Join("\r\n", post.Tags.Select(x => x.Name))
+            //};
 
 
 
-			await PopulatePostEditModelAsync(model);
+            await PopulatePostEditModelAsync(model);
 
 			return View(model);
 		}

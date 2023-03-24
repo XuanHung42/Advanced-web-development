@@ -5,8 +5,8 @@
 		public static IEndpointRouteBuilder UseBlogRoutes(
 		  this IEndpointRouteBuilder endpoints)
 		{
-
-			endpoints.MapControllerRoute(
+           
+            endpoints.MapControllerRoute(
 			  name: "posts-by-author",
 			  pattern: "blog/author/{slug}",
 			  defaults: new { controller = "Blog", action = "Author" });
