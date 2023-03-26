@@ -107,6 +107,41 @@ namespace TatBlog.Data.Migrations
                     b.ToTable("Category", (string)null);
                 });
 
+            modelBuilder.Entity("TatBlog.Core.Entities.Comment", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CommentDate")
+                        .HasColumnType("datetime");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasMaxLength(1000)
+                        .HasColumnType("nvarchar(1000)");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<int>("PostId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PostId");
+
+                    b.ToTable("Comment", (string)null);
+                });
+
             modelBuilder.Entity("TatBlog.Core.Entities.Post", b =>
                 {
                     b.Property<int>("Id")
@@ -138,7 +173,7 @@ namespace TatBlog.Data.Migrations
                     b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime");
 
-                    b.Property<DateTime>("PostedDay")
+                    b.Property<DateTime>("PostedDate")
                         .HasColumnType("datetime");
 
                     b.Property<bool>("Published")
@@ -217,6 +252,18 @@ namespace TatBlog.Data.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("TatBlog.Core.Entities.Comment", b =>
+                {
+                    b.HasOne("TatBlog.Core.Entities.Post", "Post")
+                        .WithMany("Comments")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired()
+                        .HasConstraintName("FK_Comments_Post");
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("TatBlog.Core.Entities.Post", b =>
                 {
                     b.HasOne("TatBlog.Core.Entities.Author", "Author")
@@ -226,7 +273,7 @@ namespace TatBlog.Data.Migrations
                         .IsRequired()
                         .HasConstraintName("FK_Post_Authors");
 
-                    b.HasOne("TatBlog.Core.Entities.Category", "Catelory")
+                    b.HasOne("TatBlog.Core.Entities.Category", "Category")
                         .WithMany("Posts")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -235,7 +282,7 @@ namespace TatBlog.Data.Migrations
 
                     b.Navigation("Author");
 
-                    b.Navigation("Catelory");
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("TatBlog.Core.Entities.Author", b =>
@@ -246,6 +293,11 @@ namespace TatBlog.Data.Migrations
             modelBuilder.Entity("TatBlog.Core.Entities.Category", b =>
                 {
                     b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("TatBlog.Core.Entities.Post", b =>
+                {
+                    b.Navigation("Comments");
                 });
 #pragma warning restore 612, 618
         }

@@ -1,0 +1,84 @@
+﻿@model AuthorFilterModel;
+
+@{
+    ViewData["PageTitle"] = "Danh sách tác giả";
+    var authorsList = ViewBag.AuthorList as IPagedList<Author>;
+
+   
+
+}
+<h1>
+    Danh sách tác giả
+</h1>
+<partial name="_AuthorFilterPane" model="Model" />
+@if (authorsList != null && authorsList.Count > 0)
+{
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Hình đại diện</th>
+                <th>Tên tác giả</th>
+                <th> Xóa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var author in authorsList)
+            {
+                <tr>
+                    <td>
+                        @if (!string.IsNullOrWhiteSpace(author.ImageUrl))
+                        {
+                            <img src="/@author.ImageUrl"
+                     class="img-thumbnail"
+                     style="width:120px;height:150px" />
+                        }
+                        else
+                        {
+                            <img src="~/images/person3.jpg"
+                     class="img-thumbnail" style="width:120px;height:150px" />
+                        }
+                        
+
+                
+                       
+                    </td>
+                    <td>
+                        <a asp-area="Admin"
+                   asp-controller="Authors"
+                   asp-action="Edit"
+                   asp-route-id="@author.Id"
+                   class="text-bold">
+                            @author.FullName
+                        </a>
+                        <p class="text-muted">
+                            @author.Email
+                        </p>
+                        <p>
+                            Ngày tham gia: <span class="text-muted">@author.JoinDate.ToString("yyyy MMMM dd")</span>
+                        </p>
+                    </td>
+                    
+                    <td>
+                       
+                        <a class="btn"
+                   asp-area="Admin"
+                   asp-controller="Authors"
+                   asp-action="DeleteAuthor"
+                   asp-route-id="@author.Id">
+                            <i class="fa fa-trash" style="color:red"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <partial name="_Pager" model="@authorsList" />
+
+}
+else
+{
+    <h1 class="text-danger">
+        Không tìm thấy tác giả nào
+    </h1>
+}
+

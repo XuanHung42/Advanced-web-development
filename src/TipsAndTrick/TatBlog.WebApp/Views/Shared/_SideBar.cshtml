@@ -1,24 +1,14 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<h1>
-	Tiềm kiếm bài viết
-</h1>
+﻿
 
-<h1>
-	Các chủ đề
-</h1>
+<div class="my-4">
+	<partial name="_SearchForm" />
 
-<h1>
-	Bài viết nổi bật
-</h1>
+	@await Component.InvokeAsync("CategoriesWidget")
+	@await Component.InvokeAsync("FeaturesWidget")
+	@await Component.InvokeAsync("RadomWidget")
+	@await Component.InvokeAsync("TagCloudWidget")
+	@await Component.InvokeAsync("BestAuthors")
+</div> 
 
-<h1>
-	Đăng ký nhận tin mới
-</h1>
 
-<h1>
-	Tag cloud
-</h1>
+
