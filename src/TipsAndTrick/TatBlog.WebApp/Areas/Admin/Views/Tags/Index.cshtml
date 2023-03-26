@@ -1,6 +1,60 @@
-﻿@{
-	ViewData["PageTitle"] = "Bảng thẻ/danh mục";
+﻿@model TagFilterModel
+
+@{
+    ViewData["PageTitle"] = "Danh sách thẻ";
+    var tagList = ViewBag.TagList as IPagedList<Tag>;
+
 }
 <h1>
-	Đây là khu vực dành cho người quản trị
+    Danh sách bài viết
 </h1>
+<partial name="_TagFilterPane" model="Model" />
+@if (tagList != null && tagList.Count > 0)
+{
+    <table class="table table-responsive table-striped">
+        <thead>
+            <tr>
+                <th>Tên chủ đề</th>
+
+                <th> Xóa</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var tag in tagList)
+            {
+                <tr>
+                    <td>
+                        <a asp-area="Admin"
+                   asp-controller="Tags"
+                   asp-action="Edit"
+                   asp-route-id="@tag.Id"
+                   class="text-bold">
+                            @tag.Name
+                        </a>
+                        <p class="text-muted">
+                            @tag.Description
+                        </p>
+                    </td>
+
+                    <td>
+
+                        <a class="btn"
+                   asp-area="Admin"
+                   asp-controller="Tags"
+                   asp-action="DeleteTag"
+                   asp-route-id="@tag.Id">
+                            <i class="fa fa-trash" style="color:red"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <partial name="_Pager" model="@tagList" />
+}
+else
+{
+    <h1 class="text-danger">
+        Không tìm thấy thẻ  nào
+    </h1>
+}
