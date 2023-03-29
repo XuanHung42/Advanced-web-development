@@ -9,8 +9,8 @@ namespace TatBlog.WebApp.Controllers
     public class BlogController : Controller
     {
         private readonly IBlogResponsitory _blogResponsitory;
-        private readonly IAuthorResponsitory _authorResponsitory;
-        public BlogController(IBlogResponsitory blogResponsitory, IAuthorResponsitory authorResponsitory)
+        private readonly IAuthorRepository _authorResponsitory;
+        public BlogController(IBlogResponsitory blogResponsitory, IAuthorRepository authorResponsitory)
         {
             _blogResponsitory = blogResponsitory;
             _authorResponsitory = authorResponsitory;
@@ -69,7 +69,7 @@ namespace TatBlog.WebApp.Controllers
             [FromQuery(Name ="p")] int pageNumber = 1,
             [FromQuery(Name ="ps")] int pageSize = 5)
         {
-            var author = await _authorResponsitory.FindAuthorBySlugAsync(slug);
+            var author = await _authorResponsitory.GetAuthorBySlugAsync(slug);
             var postQuery = new PostQuery()
             {
                 AuthorSlug = slug

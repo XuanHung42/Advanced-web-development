@@ -14,12 +14,12 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
 	{
 
         private readonly IBlogResponsitory _blogResponsitory;
-        private readonly IAuthorResponsitory _authorResponsitory;
+        private readonly IAuthorRepository _authorResponsitory;
         private readonly IMapper _mapper;
         private readonly IMediaManager _mediaManager;
         private readonly ILogger<CategoriesController> _logger;
 
-        public CategoriesController(IBlogResponsitory blogResponsitory, IAuthorResponsitory authorResponsitory, IMapper mapper, IMediaManager mediaManager, ILogger<CategoriesController> logger)
+        public CategoriesController(IBlogResponsitory blogResponsitory, IAuthorRepository authorResponsitory, IMapper mapper, IMediaManager mediaManager, ILogger<CategoriesController> logger)
         {
             _blogResponsitory = blogResponsitory;
             _authorResponsitory = authorResponsitory;
@@ -52,7 +52,7 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id = 0)
         {
             var author = id > 0
-                ? await _authorResponsitory.FindAuthorByIdAsync(id, true)
+                ? await _authorResponsitory.GetAuthorByIdIsDetailAsync(id, true)
                 : null;
 
             var model = author == null

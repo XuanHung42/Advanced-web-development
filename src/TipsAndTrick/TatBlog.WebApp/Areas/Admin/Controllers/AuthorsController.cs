@@ -13,12 +13,12 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
     public class AuthorsController : Controller
     {
         private readonly IBlogResponsitory _blogResponsitory;
-        private readonly IAuthorResponsitory _authorResponsitory;
+        private readonly IAuthorRepository _authorResponsitory;
         private readonly IMapper _mapper;
         private readonly IMediaManager _mediaManager;
         private readonly ILogger<AuthorsController> _logger;
 
-        public AuthorsController(IBlogResponsitory blogResponsitory, IAuthorResponsitory authorResponsitory, IMapper mapper, IMediaManager mediaManager, ILogger<AuthorsController> logger)
+        public AuthorsController(IBlogResponsitory blogResponsitory, IAuthorRepository authorResponsitory, IMapper mapper, IMediaManager mediaManager, ILogger<AuthorsController> logger)
         {
             _blogResponsitory = blogResponsitory;
             _authorResponsitory = authorResponsitory;
@@ -43,7 +43,7 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
             };
            
 
-            ViewBag.AuthorList = await _blogResponsitory.GetPageAuthorAsync(authorQuery, pageNumber, pageSize);
+            ViewBag.AuthorList = await _authorResponsitory.GetPageAuthorAsync(authorQuery, pageNumber, pageSize);
 
             return View(model);
         }
@@ -52,7 +52,7 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> Edit(int id = 0)
         {
             var author = id > 0
-                ? await _authorResponsitory.FindAuthorByIdAsync(id, true)
+                ? await _authorResponsitory.GetAuthorByIdIsDetailAsync(id, true)
                 : null;
 
             var model = author == null
@@ -75,7 +75,7 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
                 return View(model);
             }
             var author = model.Id > 0
-                ? await _authorResponsitory.FindAuthorByIdAsync(model.Id, true)
+                ? await _authorResponsitory.GetAuthorByIdIsDetailAsync(model.Id, true)
                 : null;
             if (author == null)
             {
@@ -98,7 +98,7 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
                 }
             }
 
-            await _authorResponsitory.CreateOrUpdateAuthorAsync(author);
+            await _authorResponsitory.AddOrUpdateAsync(author);
             return RedirectToAction(nameof(Index));
 
         }
@@ -106,14 +106,14 @@ namespace TatBlog.WebApp.Areas.Admin.Controllers
         public async Task<IActionResult> VerifyAuthorSlug(int id, string urlSlug)
         {
             var slugExisted = await _authorResponsitory
-                .IsAuthorExistBySlugAsync(id, urlSlug);
+                .IsAuthorSlugExistedAsync(id, urlSlug);
             return slugExisted
                 ? Json($"Slug '{urlSlug}' đã được sử dụng")
                 : Json(true);
         }
         public async Task<IActionResult> DeleteAuthor(int id)
         {
-            await _blogResponsitory.DeleteAuthorById(id);
+            await _authorResponsitory.DeleteAuthorAsync(id);
             return RedirectToAction("Index");
 
         }

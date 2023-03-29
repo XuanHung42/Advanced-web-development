@@ -21,9 +21,11 @@ namespace TatBlog.Core.Contracts
         int LastItemIndex { get; }
     }
 
+
     public interface IPagedList<out T> : IPagedList, IEnumerable<T>
     {
-        T this[int index] { get; }
+         T this[int index] { get; }
         int Count { get; }
     }
+
 }

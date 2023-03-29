@@ -7,14 +7,14 @@ namespace TatBlog.WebApp.Components
 {
 	public class BestAuthors:ViewComponent
 	{
-		IAuthorResponsitory _authorResponsitory;
+		IAuthorRepository _authorResponsitory;
 		IPagingParams pagingParams = new PagingParams()
 		{
 			PageNumber= 1,
 			PageSize= 3,
 		};
 
-		public BestAuthors(IAuthorResponsitory authorResponsitory)
+		public BestAuthors(IAuthorRepository authorResponsitory)
 		{
 			_authorResponsitory = authorResponsitory;
 		}

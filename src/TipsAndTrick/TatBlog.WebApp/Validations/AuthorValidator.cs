@@ -7,9 +7,9 @@ namespace TatBlog.WebApp.Validations
     public class AuthorValidator:AbstractValidator<AuthorEditModel>
     {
         private readonly IBlogResponsitory _blogResponsitoryblog;
-        private readonly IAuthorResponsitory _authorResponsitory;
+        private readonly IAuthorRepository _authorResponsitory;
 
-        public AuthorValidator(IBlogResponsitory blogResponsitoryblog, IAuthorResponsitory authorResponsitory)
+        public AuthorValidator(IBlogResponsitory blogResponsitoryblog, IAuthorRepository authorResponsitory)
         {
             _blogResponsitoryblog = blogResponsitoryblog;
             _authorResponsitory = authorResponsitory;
@@ -32,7 +32,7 @@ namespace TatBlog.WebApp.Validations
 
             RuleFor(x => x.UrlSlug)
               .MustAsync(async (authorModel, slug, cancellationToken) =>
-              !await _authorResponsitory.IsAuthorExistBySlugAsync(
+              !await _authorResponsitory.IsAuthorSlugExistedAsync(
                 authorModel.Id, slug, cancellationToken))
               .WithMessage(x => $"Slug '{x.UrlSlug}' đã được sử dụng");
 
@@ -59,7 +59,7 @@ namespace TatBlog.WebApp.Validations
           CancellationToken cancellationToken)
         {
             var post = await _authorResponsitory.GetAuthorByIdAsync(
-              authorModel.Id,cancellationToken);
+              authorModel.Id);
 
             if (!string.IsNullOrWhiteSpace(post?.ImageUrl))
                 return true;
