@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using TatBlog.Core.Contracts;
 using TatBlog.Core.DTO;
 using TatBlog.Core.Entities;
+using TatBlog.Services.Extensions;
 using static TatBlog.Core.Contracts.IPagedList;
 
 namespace TatBlog.Services.Blogs
@@ -14,7 +15,12 @@ namespace TatBlog.Services.Blogs
     public interface IBlogResponsitory
 
     {
-    Task<Post> GetPostAsync(int year,int month,string slug,CancellationToken cancellationToken = default)
+        Task<IPagedList<T>> GetPagedPostsAsync<T>(PostQuery query,
+         IPagingParams pagingParams,
+         Func<IQueryable<Post>,
+         IQueryable<T>> mapper,
+         CancellationToken cancellationToken = default);
+        Task<Post> GetPostAsync(int year,int month,string slug,CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
         }
@@ -50,7 +56,7 @@ namespace TatBlog.Services.Blogs
         Task<IPagedList<Post>> GetPagedPostsAsync(PostQuery query, int pageNumber,int pageSize ,CancellationToken cancellationToken = default);
 
         Task<IList<Post>> RandomPosts(int r,CancellationToken cancellationToken = default);
-        Task<IList<AuthorItem>> GetAuthorsAsync(CancellationToken cancellationToken = default);
+ 
 
         Task<Post> GetPostbyIdAsync(int id,bool isPublished ,CancellationToken cancellationToken = default);
         Task<Post> CreateOrUpdatePostAsync(
@@ -60,22 +66,18 @@ namespace TatBlog.Services.Blogs
     int id,
      CancellationToken cancellationToken = default
 );
-        Task<bool> DeletePostById(int id, CancellationToken cancellationToken = default);
-        Task<IPagedList<Author>> GetPageAuthorAsync(
-AuthorQuery condition,
-int pageNumber = 1,
-int pageSize = 5,
-CancellationToken cancellationToken = default);
-       Task<IPagedList<Category>> GetPageCategoriesAsync(
+        Task<IPagedList<Category>> GetPageCategoriesAsync(
        CategoryQuery condition,
        int pageNumber = 1,
        int pageSize = 5,
        CancellationToken cancellationToken = default);
+        Task<bool> DeletePostById(int id, CancellationToken cancellationToken = default);
+       
         Task<Category> FindCategoriesByIdAsync(int id, bool isDetail = false, CancellationToken cancellation = default);
         Task<Category> CreateOrUpdateCategoryAsync(
              Category category, CancellationToken cancellationToken = default);
         Task<bool> DeleteCategoryById(int id, CancellationToken cancellationToken = default);
-        Task<bool> DeleteAuthorById(int id, CancellationToken cancellationToken = default);
+        
         Task<bool> DeleteTagById(int id, CancellationToken cancellationToken = default);
         Task<Tag> FindTagByIdAsync(int id, bool isDetail = false, CancellationToken cancellation = default);
         Task<IPagedList<Tag>> GetPagedTagAsync(

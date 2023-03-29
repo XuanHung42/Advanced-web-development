@@ -14,7 +14,7 @@ var context = new BlogDdContext();
 
 
 
-IAuthorResponsitory blogRepo = new AuthorResponsitory(context);
+//IAuthorRepository blogRepo = new AuthorRepository(context);
 // var pagingParams = new PagingParams
 //{
 //    PageNumber = 1,

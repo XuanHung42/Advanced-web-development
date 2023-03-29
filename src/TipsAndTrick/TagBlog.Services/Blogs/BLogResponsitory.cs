@@ -230,7 +230,16 @@ namespace TatBlog.Services.Blogs
             .ExecuteUpdateAsync(p => p.SetProperty(x => x.Published, x => !x.Published), cancellationToken);
 
         }
-
+        public async Task<IPagedList<T>> GetPagedPostsAsync<T>(PostQuery query,
+        IPagingParams pagingParams,
+        Func<IQueryable<Post>,
+        IQueryable<T>> mapper,
+        CancellationToken cancellationToken = default)
+        {
+            IQueryable<Post> postFindQuery = FilterPosts(query);
+            IQueryable<T> tQueryResult = mapper(postFindQuery);
+            return await tQueryResult.ToPagedListAsync(pagingParams, cancellationToken);
+        }
         public Task<IPagedList<Post>> FindAndPagedPostAsync(PostQuery query, IPagingParams pagingParams, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();
@@ -333,17 +342,8 @@ namespace TatBlog.Services.Blogs
                 nameof(Category.Id), "DESC",
                 cancellationToken);
         }
-        public async Task<IPagedList<Author>> GetPageAuthorAsync(
-       AuthorQuery condition,
-       int pageNumber = 1,
-       int pageSize = 5,
-       CancellationToken cancellationToken = default)
-        {
-            return await FilterAuthor(condition).ToPagedListAsync(
-                pageNumber, pageSize,
-                nameof(Author.Id), "DESC",
-                cancellationToken);
-        }
+
+    
         public async Task<IPagedList<Tag>> GetPagedTagAsync(
       TagQuery condition,
       int pageNumber = 1,
@@ -356,23 +356,7 @@ namespace TatBlog.Services.Blogs
                 cancellationToken);
         }
 
-        private IQueryable<Author> FilterAuthor(AuthorQuery condition)
-        {
-            IQueryable<Author> authorQuery = _context.Set<Author>();
-
-            if (!string.IsNullOrWhiteSpace(condition.Keyword))
-            {
-                authorQuery = authorQuery
-                  .Where(a =>
-                       a.Email.Contains(condition.Keyword)
-                    || a.FullName.Contains(condition.Keyword));
-
-            }
-
-          
-
-            return authorQuery;
-        }
+       
         private IQueryable<Tag> FilterTag(TagQuery condition)
         {
             IQueryable<Tag> tagQuery = _context.Set<Tag>();

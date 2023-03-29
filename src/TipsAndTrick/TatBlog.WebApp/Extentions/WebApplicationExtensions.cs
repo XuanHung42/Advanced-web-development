@@ -23,13 +23,14 @@ namespace TatBlog.WebApp.Extensions
 		public static WebApplicationBuilder ConfigureServices(
 		  this WebApplicationBuilder builder)
 		{
+
 			builder.Services.AddDbContext<BlogDdContext>(options =>
 			  options.UseSqlServer(
 				builder.Configuration
 				  .GetConnectionString("DefaultConnection")));
 
 			builder.Services.AddScoped<IBlogResponsitory, BLogResponsitory>();
-			builder.Services.AddScoped< IAuthorResponsitory, AuthorResponsitory>();
+			builder.Services.AddScoped< IAuthorRepository, AuthorRepository>();
 			builder.Services.AddScoped<IDataSeeder, DataSeeder>();
 			builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
 			
