@@ -207,4 +207,26 @@ public class AuthorRepository : IAuthorRepository
             .Take(n).ToPagedListAsync(pagingParams, cancellationToken);
 
     }
+    public async Task<IPagedList<T>> GetAuthorTopPostAsync<T>(
+       int n,
+       IPagingParams pagingParams,
+       Func<IQueryable<Author>, IQueryable<T>> mapper,
+       CancellationToken cancellationToken = default)
+    {
+        Author authorTop = _context.Set<Author>()
+          .Include(a => a.Posts)
+          .OrderByDescending(a => a.Posts.Count(p => p.Published))
+          .First();
+
+        int top = authorTop.Posts.Count(p => p.Published);
+
+        IQueryable<Author> authors = _context.Set<Author>()
+                .Include(a => a.Posts)
+                .Where(a => a.Posts.Count > 2
+                      && a.Posts.Count <= authorTop.Posts.Count)
+                .Take(n);
+
+        return await mapper(authors).ToPagedListAsync(pagingParams, cancellationToken);
+    }
+
 }

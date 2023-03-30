@@ -55,4 +55,9 @@ public interface IAuthorRepository
    int pageNumber = 1,
    int pageSize = 5,
    CancellationToken cancellationToken = default);
+	Task<IPagedList<T>> GetAuthorTopPostAsync<T>(
+		 int n,
+		 IPagingParams pagingParams,
+		 Func<IQueryable<Author>, IQueryable<T>> mapper,
+		 CancellationToken cancellationToken = default);
 }
