@@ -34,9 +34,10 @@ namespace TatBlog.WebApi.Endpoints
                 .WithName("GetPostsByAuthorsSlug")
                  .Produces<ApiResponse<PaginationResult<PostDto>>>();
             routeGroupBuilder.MapPost("/", AddAuthor)
-              .WithName("AddNewAuthor")
+
               .AddEndpointFilter<ValidatorFilter<AuthorEditModel>>()
-              .RequireAuthorization()
+              .WithName("AddNewAuthor")
+  
               .Produces(401)
               .Produces<ApiResponse<AuthorItem>>();
             routeGroupBuilder.MapPost("/{id:int}/avatar", SetAuthorPicture)
@@ -48,7 +49,7 @@ namespace TatBlog.WebApi.Endpoints
             routeGroupBuilder.MapPut("/{id:int}", UpdateAuthor)
             .WithName("UpdateAnAuthor")
             .AddEndpointFilter<ValidatorFilter<AuthorEditModel>>()
-            .RequireAuthorization()
+           
             .Produces(401)
             .Produces<ApiResponse<string>>();
             routeGroupBuilder.MapDelete("/", DeleteAuthor)

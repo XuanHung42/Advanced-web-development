@@ -12,17 +12,22 @@ using TatBlog.Data.Contexts;
 using TatBlog.Services.Extensions;
 using SlugGenerator;
 using static TatBlog.Core.Contracts.IPagedList;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace TatBlog.Services.Blogs
 {
     public class BLogResponsitory : IBlogResponsitory
     {
         private readonly BlogDdContext _context;
+        private readonly IMemoryCache _memoryCache;
 
-        public BLogResponsitory(BlogDdContext context)
+        public BLogResponsitory(BlogDdContext context, IMemoryCache memoryCache)
         {
             _context = context;
+            _memoryCache = memoryCache;
         }
+
+
 
         //tim bai viet có ten dinh danh la slug
         public async Task<Post> GetPostAsync(
@@ -342,8 +347,30 @@ namespace TatBlog.Services.Blogs
                 nameof(Category.Id), "DESC",
                 cancellationToken);
         }
+        public async Task<IPagedList<CategoryItem>> GetPagedCategoriesAsync(
+        IPagingParams pagingParams,
+        string name = null,
+        CancellationToken cancellationToken = default)
+        {
 
-    
+            return await _context.Set<Category>()
+                .AsNoTracking()
+                .WhereIf(!string.IsNullOrWhiteSpace(name),
+                    x => x.Name.Contains(name))
+                .Select(a => new CategoryItem()
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    ShowMenu = a.ShowMenu,
+                    UrlSlug = a.UrlSlug,
+                    PostCount = a.Posts.Count(p => p.Published)
+                })
+                .ToPagedListAsync(pagingParams, cancellationToken);
+
+
+        }
+
         public async Task<IPagedList<Tag>> GetPagedTagAsync(
       TagQuery condition,
       int pageNumber = 1,
@@ -471,6 +498,21 @@ namespace TatBlog.Services.Blogs
             await _context.SaveChangesAsync(cancellationToken);
             return category;
         }
+        public async Task<bool> AddOrUpdateCategoryAsync(
+      Category category, CancellationToken cancellationToken = default)
+        {
+            if (category.Id > 0)
+            {
+                _context.Categories.Update(category);
+                _memoryCache.Remove($"category.by-id.{category.Id}");
+            }
+            else
+            {
+                _context.Categories.Add(category);
+            }
+
+            return await _context.SaveChangesAsync(cancellationToken) > 0;
+        }
         public async Task<Tag> CreateOrUpdateTagAsync(
           Tag tag, CancellationToken cancellationToken = default)
         {
@@ -575,6 +617,37 @@ namespace TatBlog.Services.Blogs
             _context.Set<Tag>().Remove(delTagId);
             await _context.SaveChangesAsync(cancellationToken);
             return true;
+        }
+        public async Task<Category> GetCategoryBySlugAsync(
+        string slug, CancellationToken cancellationToken = default)
+        {
+            return await _context.Set<Category>()
+                .FirstOrDefaultAsync(a => a.UrlSlug == slug, cancellationToken);
+        }
+        public async Task<Category> GetCachedCategoryBySlugAsync(
+        string slug, CancellationToken cancellationToken = default)
+        {
+            return await _memoryCache.GetOrCreateAsync(
+                $"category.by-slug.{slug}",
+                async (entry) =>
+                {
+                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
+                    return await GetCategoryBySlugAsync(slug, cancellationToken);
+                });
+        }
+        public async Task<Category> GetCategoryByIdAsync(int id)
+        {
+            return await _context.Set<Category>().FindAsync(id);
+        }
+        public async Task<Category> GetCachedCategoryByIdAsync(int id)
+        {
+            return await _memoryCache.GetOrCreateAsync(
+                $"author.by-id.{id}",
+                async (entry) =>
+                {
+                    entry.AbsoluteExpirationRelativeToNow = TimeSpan.FromMinutes(30);
+                    return await GetCategoryByIdAsync(id);
+                });
         }
 
     }
