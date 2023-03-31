@@ -56,12 +56,18 @@ namespace TatBlog.Services.Blogs
         Task<IPagedList<Post>> GetPagedPostsAsync(PostQuery query, int pageNumber,int pageSize ,CancellationToken cancellationToken = default);
 
         Task<IList<Post>> RandomPosts(int r,CancellationToken cancellationToken = default);
-       
 
-        Task<Post> GetPostbyIdAsync(int id,bool isPublished ,CancellationToken cancellationToken = default);
+        Task<Post> GetPostbyIdAsync(
+          int id,
+
+          CancellationToken cancellationToken = default);
+        Task<Post> GetPostbyIdAsync(int id,bool isDetail ,CancellationToken cancellationToken = default);
         Task<Post> CreateOrUpdatePostAsync(
         Post post, IEnumerable<string> tags,
         CancellationToken cancellationToken = default);
+        Task<bool> CreateOrUpdatePostBoolAsync(
+      Post post, IEnumerable<string> tags,
+      CancellationToken cancellationToken = default);
         Task<Post> FindPostByIdAsync(
     int id,
      CancellationToken cancellationToken = default
@@ -100,7 +106,21 @@ namespace TatBlog.Services.Blogs
         Task<Category> GetCategoryByIdAsync(int id);
         Task<bool> AddOrUpdateCategoryAsync(
       Category category, CancellationToken cancellationToken = default);
-
+        Task<IList<T>> RandomPosts<T>(int n, Func<IQueryable<Post>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
+        Task<IList<T>> GetFeaturePostsAsync<T>(int n, Func<IQueryable<Post>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
+        Task<Post> GetPostBySlugAsync(
+       string slug,
+       bool includeDetails = false,
+       CancellationToken cancellationToken = default);
+        Task<bool> SetImageUrlAsync(
+        int postId, string imageUrl,
+        CancellationToken cancellationToken = default);
+        Task<IPagedList<TagItem>> GetPagedTagAsync(
+       IPagingParams pagingParams,
+       string name = null,
+       CancellationToken cancellationToken = default);
+        Task<bool> CreateOrUpdateTagBoolAsync(
+         Tag tag, CancellationToken cancellationToken = default);
 
 
     }
