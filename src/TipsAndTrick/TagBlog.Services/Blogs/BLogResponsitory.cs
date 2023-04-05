@@ -90,7 +90,7 @@ namespace TatBlog.Services.Blogs
         //Lay danh sach chuyen muc va so luong bai viet
 
         public async Task<IList<CategoryItem>> GetCategoriesAsync(
-            bool showOnMenu = false,
+            bool showOnMenu = true,
             CancellationToken cancellationToken = default)
         {
             IQueryable<Category> categories = _context.Set<Category>();
@@ -159,18 +159,18 @@ namespace TatBlog.Services.Blogs
         }
 
         //Lay toan bo Category
-        public async Task<IList<CategoryItem>> GetCategorysAsync(CancellationToken cancellationToken = default)
-        {
-            IQueryable<Category> tags = _context.Set<Category>();
-            return await tags.Select(x => new CategoryItem()
-            {
-                Id = x.Id,
-                Name = x.Name,
-                Description = x.Description,
-                UrlSlug = x.UrlSlug,
-                PostCount = x.Posts.Count(x => x.Published)
-            }).ToListAsync(cancellationToken);
-        }
+        //public async Task<IList<CategoryItem>> GetCategorysAsync(CancellationToken cancellationToken = default)
+        //{
+        //    IQueryable<Category> tags = _context.Set<Category>();
+        //    return await tags.Select(x => new CategoryItem()
+        //    {
+        //        Id = x.Id,
+        //        Name = x.Name,
+        //        Description = x.Description,
+        //        UrlSlug = x.UrlSlug,
+        //        PostCount = x.Posts.Count(x => x.Published)
+        //    }).ToListAsync(cancellationToken);
+        //}
         public async Task<IList<AuthorItem>> GetAuthorsAsync(CancellationToken cancellationToken = default)
         {
             IQueryable<Author> authors = _context.Set<Author>();
@@ -367,6 +367,29 @@ namespace TatBlog.Services.Blogs
                     PostCount = a.Posts.Count(p => p.Published)
                 })
                 .ToPagedListAsync(pagingParams, cancellationToken);
+
+
+        }
+        public async Task<IList<CategoryItem>> GetCategoryListAsync(
+  
+       string name = null,
+       CancellationToken cancellationToken = default)
+        {
+
+            return await _context.Set<Category>()
+                .AsNoTracking()
+                .WhereIf(!string.IsNullOrWhiteSpace(name),
+                    x => x.Name.Contains(name))
+                .Select(a => new CategoryItem()
+                {
+                    Id = a.Id,
+                    Name = a.Name,
+                    Description = a.Description,
+                    ShowMenu = a.ShowMenu,
+                    UrlSlug = a.UrlSlug,
+                    PostCount = a.Posts.Count(p => p.Published)
+                })
+                .ToListAsync(cancellationToken);
 
 
         }

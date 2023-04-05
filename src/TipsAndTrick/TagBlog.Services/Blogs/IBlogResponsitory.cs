@@ -15,6 +15,10 @@ namespace TatBlog.Services.Blogs
     public interface IBlogResponsitory
 
     {
+        Task<IList<CategoryItem>> GetCategoryListAsync(
+
+      string name = null,
+      CancellationToken cancellationToken = default);
         Task<IPagedList<T>> GetPagedPostsAsync<T>(PostQuery query,
          IPagingParams pagingParams,
          Func<IQueryable<Post>,
@@ -44,7 +48,7 @@ namespace TatBlog.Services.Blogs
         Task<Category> FindCategoriesBySlugAsync(string slug, CancellationToken cancellation = default);
         Task<Tag> FindTagSlugAsync(string slug, CancellationToken cancellation = default);
         Task<IList<TagItem>> GetTagsAsync(CancellationToken cancellationToken = default);
-        Task<IList<CategoryItem>> GetCategorysAsync(CancellationToken cancellationToken = default);
+        //Task<IList<CategoryItem>> GetCategorysAsync(CancellationToken cancellationToken = default);
 
         Task<bool> DeleleTagWithSlugAsync(string slug, CancellationToken cancellation= default);
         Task<Tag> FindTagWithIdAsync(int id, CancellationToken cancellationToken = default);

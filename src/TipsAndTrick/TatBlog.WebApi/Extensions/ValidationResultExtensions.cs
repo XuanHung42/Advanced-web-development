@@ -11,7 +11,8 @@ namespace TatBlog.WebApi.Extensions
         }
         public static ValidationFailureResponse ToResponse( this IEnumerable<ValidationFailure> failures)
         {
-            return new ValidationFailureResponse(failures.Select(e=> e.ErrorMessage));
+            return new ValidationFailureResponse(
+                failures.Select(e=> e.ErrorMessage));
         }
 
         public static IList<string> GetErrorMessages(this ValidationResult validationResult) {

@@ -1,6 +1,7 @@
 ﻿using FluentValidation;
 using Mapster;
 using MapsterMapper;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using NLog.Targets.Wrappers;
 using System.Net;
 using System.Security.Cryptography;
@@ -18,11 +19,17 @@ namespace TatBlog.WebApi.Endpoints
     {
         public static WebApplication MapPostEndpoints(this WebApplication app)
         {
+           
             var routeGroupBuilder = app.MapGroup("/api/posts");
-            routeGroupBuilder.MapGet("/", GetPosts)
+            routeGroupBuilder.MapGet("/",GetPosts)
                 .WithName("GetPosts")
                 .Produces<ApiResponse<PaginationResult<PostDto>>>();
-
+            //routeGroupBuilder.MapGet("/get-posts-filter", GetFilteredPosts)
+            //   .WithName("GetFilteredPost")
+            //   .Produces<ApiResponse<PostDto>>();
+            //routeGroupBuilder.MapGet("/get-filter", GetFilter)
+            //    .WithName("GetFilter")
+            //    .Produces<ApiResponse<PostFilterModel>>();
             routeGroupBuilder.MapGet("featured/{limit:int}", GetFeaturePosts)
               .WithName("GetPostsFeatured")
               .Produces<ApiResponse<IList<PostDto>>>();
@@ -49,6 +56,38 @@ namespace TatBlog.WebApi.Endpoints
             .Produces(401)
             .Produces<ApiResponse<string>>();
             return app;
+        }
+        private static async Task<IResult> GetFilter(IAuthorRepository authorRepository, IBlogResponsitory blogRepository) { 
+            var model = new PostFilterModel() { 
+                AuthorList = (await authorRepository.GetAuthorsAsync())
+                .Select(a => new SelectListItem() { 
+                    Text = a.FullName, 
+                    Value = a.Id.ToString() 
+                }), 
+                CategoryList = (await blogRepository.GetCategoriesAsync())
+                .Select(c => new SelectListItem() {
+                    Text = c.Name, 
+                    
+                    Value = c.Id.ToString() 
+                }) 
+            }; 
+            return Results.Ok(ApiResponse.Success(model)); }
+
+        private static async Task<IResult> GetFilteredPosts([AsParameters] PostFilterModel model, 
+            [AsParameters] PagingModel pagingModel, 
+            IBlogResponsitory blogRepository)
+        {
+            var postQuery = new PostQuery()
+            {
+                Keyword = model.Keyword,
+               CategoryId = model.CategoryId,
+                AuthorId = model.AuthorId,
+                Year = model.Year,
+                Month = model.Month,
+            }; var postsList = await blogRepository.GetPagedPostsAsync(postQuery, pagingModel, 
+                posts => posts.ProjectToType<PostDto>()); 
+            var paginationResult = new PaginationResult<PostDto>(postsList); 
+            return Results.Ok(ApiResponse.Success(paginationResult));
         }
         private static async Task<IResult> GetPosts(
             [AsParameters] PostFilterModel model, 

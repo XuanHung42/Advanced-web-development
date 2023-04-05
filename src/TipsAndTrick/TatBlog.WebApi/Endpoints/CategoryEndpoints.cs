@@ -18,13 +18,13 @@ namespace TatBlog.WebApi.Endpoints
         public static WebApplication MapCategoryEndpoints(this WebApplication app)
         {
             var routeGroupBuilder = app.MapGroup("/api/categories");
-            routeGroupBuilder.MapGet("/", GetCategories)
+            routeGroupBuilder.MapGet("/", GetCategoriesList)
                 .WithName("GetCategories")
-                .Produces<ApiResponse<PaginationResult<CategoryItem>>>();
+                .Produces<ApiResponse<CategoryItem>>();
             routeGroupBuilder.MapGet("/{id:int}", GetDetailCategory)
                 .WithName("GetCategoryDetail")
                 .Produces<ApiResponse<CategoryItem>>();
-            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9 - ] + $)}/posts", GetPostByCateforySlug)
+            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9 - ] + $)}/posts", GetPostByCategorySlug)
               .WithName("GetPostsByCategoriesSlug")
                .Produces<ApiResponse<PaginationResult<PostDto>>>();
             routeGroupBuilder.MapPost("/", AddCategory)
@@ -53,6 +53,10 @@ namespace TatBlog.WebApi.Endpoints
             var paginationResult = new PaginationResult<CategoryItem>(categoryList);
             return Results.Ok(ApiResponse.Success(paginationResult));
         }
+
+        private static async Task<IResult> GetCategoriesList(IBlogResponsitory blogRepository) {
+            var categories = await blogRepository.GetCategoriesAsync(); 
+            return Results.Ok(ApiResponse.Success(categories)); }
         private static async Task<IResult> GetDetailCategory(int id, IBlogResponsitory blogResponsitory, IMapper mapper)
         {
             var category = await blogResponsitory.GetCachedCategoryByIdAsync(id);
@@ -60,7 +64,7 @@ namespace TatBlog.WebApi.Endpoints
                 ? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Không tìm thấy thể loại có mã số {category.Id}"))
                 : Results.Ok(ApiResponse.Success(mapper.Map<CategoryItem>(category)));
         }
-        private static async Task<IResult> GetPostByCateforySlug([FromRoute] string slug, [AsParameters] PagingModel pagingModel, IBlogResponsitory blog)
+        private static async Task<IResult> GetPostByCategorySlug([FromRoute] string slug, [AsParameters] PagingModel pagingModel, IBlogResponsitory blog)
         {
             var categoryQuery = new PostQuery()
             {
