@@ -21,6 +21,6 @@ namespace TatBlog.Core.DTO
 		public DateTime PostedDate { get; set; }
 		public DateTime? ModifiedDate { get; set; }
 		public IList<Tag> Tags { get; set; }
-        public IList<Comment> Comments { get; set; }
+        //public IList<Comment> Comments { get; set; }
     }
 }

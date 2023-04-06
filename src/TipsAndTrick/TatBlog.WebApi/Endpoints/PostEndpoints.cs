@@ -2,7 +2,10 @@
 using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.Extensions.Logging;
 using NLog.Targets.Wrappers;
+using SlugGenerator;
+using System.Collections.Generic;
 using System.Net;
 using System.Security.Cryptography;
 using TatBlog.Core.Collections;
@@ -19,17 +22,17 @@ namespace TatBlog.WebApi.Endpoints
     {
         public static WebApplication MapPostEndpoints(this WebApplication app)
         {
-           
+
             var routeGroupBuilder = app.MapGroup("/api/posts");
-            routeGroupBuilder.MapGet("/",GetPosts)
+            routeGroupBuilder.MapGet("/", GetPosts)
                 .WithName("GetPosts")
                 .Produces<ApiResponse<PaginationResult<PostDto>>>();
-            //routeGroupBuilder.MapGet("/get-posts-filter", GetFilteredPosts)
-            //   .WithName("GetFilteredPost")
-            //   .Produces<ApiResponse<PostDto>>();
-            //routeGroupBuilder.MapGet("/get-filter", GetFilter)
-            //    .WithName("GetFilter")
-            //    .Produces<ApiResponse<PostFilterModel>>();
+            routeGroupBuilder.MapGet("/get-posts-filter", GetFilteredPosts)
+               .WithName("GetFilteredPost")
+               .Produces<ApiResponse<PaginationResult<PostDto>>>();
+            routeGroupBuilder.MapGet("/get-filter", GetFilter)
+                .WithName("GetFilter")
+                .Produces<ApiResponse<PostFilterModel>>();
             routeGroupBuilder.MapGet("featured/{limit:int}", GetFeaturePosts)
               .WithName("GetPostsFeatured")
               .Produces<ApiResponse<IList<PostDto>>>();
@@ -55,62 +58,76 @@ namespace TatBlog.WebApi.Endpoints
             .WithName("DeletePost")
             .Produces(401)
             .Produces<ApiResponse<string>>();
+            routeGroupBuilder.MapPost("/", AddPost)
+                .WithName("AddNewPost")
+                .Accepts<PostEditModel>("multipart/form-data")
+                .Produces(401)
+                .Produces<ApiResponse<PostItem>>();
+
             return app;
         }
-        private static async Task<IResult> GetFilter(IAuthorRepository authorRepository, IBlogResponsitory blogRepository) { 
-            var model = new PostFilterModel() { 
+        private static async Task<IResult> GetFilter(IAuthorRepository authorRepository, IBlogResponsitory blogRepository)
+        {
+            var model = new PostFilterModel()
+            {
                 AuthorList = (await authorRepository.GetAuthorsAsync())
-                .Select(a => new SelectListItem() { 
-                    Text = a.FullName, 
-                    Value = a.Id.ToString() 
-                }), 
+                .Select(a => new SelectListItem()
+                {
+                    Text = a.FullName,
+                    Value = a.Id.ToString()
+                }),
                 CategoryList = (await blogRepository.GetCategoriesAsync())
-                .Select(c => new SelectListItem() {
-                    Text = c.Name, 
-                    
-                    Value = c.Id.ToString() 
-                }) 
-            }; 
-            return Results.Ok(ApiResponse.Success(model)); }
+                .Select(c => new SelectListItem()
+                {
+                    Text = c.Name,
 
-        private static async Task<IResult> GetFilteredPosts([AsParameters] PostFilterModel model, 
-            [AsParameters] PagingModel pagingModel, 
+                    Value = c.Id.ToString()
+                })
+            };
+            return Results.Ok(ApiResponse.Success(model));
+        }
+
+        private static async Task<IResult> GetFilteredPosts(
+            [AsParameters] PostFilterModel model,
             IBlogResponsitory blogRepository)
         {
             var postQuery = new PostQuery()
             {
                 Keyword = model.Keyword,
-               CategoryId = model.CategoryId,
+                CategoryId = model.CategoryId,
                 AuthorId = model.AuthorId,
                 Year = model.Year,
                 Month = model.Month,
-            }; var postsList = await blogRepository.GetPagedPostsAsync(postQuery, pagingModel, 
-                posts => posts.ProjectToType<PostDto>()); 
-            var paginationResult = new PaginationResult<PostDto>(postsList); 
+            }; var postsList = await blogRepository.GetPagedPostsAsync(postQuery, model,
+                posts => posts.ProjectToType<PostDto>());
+            var paginationResult = new PaginationResult<PostDto>(postsList);
             return Results.Ok(ApiResponse.Success(paginationResult));
         }
         private static async Task<IResult> GetPosts(
-            [AsParameters] PostFilterModel model, 
+            [AsParameters] PostFilterModel model,
             IBlogResponsitory blogResponsitory,
              IMapper mapper)
         {
             var postQuery = mapper.Map<PostQuery>(model);
-            var postList = await blogResponsitory.GetPagedPostsAsync(postQuery,model, post=> post.ProjectToType<PostDto>());
+            var postList = await blogResponsitory.GetPagedPostsAsync(postQuery, model, post => post.ProjectToType<PostDto>());
             var paginationResult = new PaginationResult<PostDto>(postList);
             return Results.Ok(ApiResponse.Success(paginationResult));
 
         }
-        private static async Task<IResult> GetRadomPosts(int n, IBlogResponsitory blogResponsitory)
+        private static async Task<IResult> GetRadomPosts(int limit, IBlogResponsitory blogResponsitory, IMapper mapper)
         {
-            var rdPost = await blogResponsitory.RandomPosts(n, post => post.ProjectToType<PostDto>());
+            //var postList = await blogResponsitory.RandomPosts(n);
+            //var rdPost = mapper.Map<IList<PostDto>>(postList);
+            var rdPost = await blogResponsitory.RandomPosts(limit, p => p.ProjectToType<PostDto>());
             return Results.Ok(ApiResponse.Success(rdPost));
 
 
         }
-        private static async Task<IResult> GetFeaturePosts(int n, IBlogResponsitory blogResponsitory)
+        private static async Task<IResult> GetFeaturePosts(int limit, IBlogResponsitory blogResponsitory, IMapper mapper)
         {
-            var rdPost = await blogResponsitory.GetFeaturePostsAsync(n, post => post.ProjectToType<PostDto>());
-            return Results.Ok(ApiResponse.Success(rdPost));
+            var postList = await blogResponsitory.GetPopularArticlesAsync(limit);
+            var ftPost = mapper.Map<IList<PostDto>>(postList);
+            return Results.Ok(ApiResponse.Success(ftPost));
 
 
         }
@@ -131,31 +148,76 @@ namespace TatBlog.WebApi.Endpoints
         : Results.Ok(ApiResponse.Success(
             mapper.Map<PostDetail>(post)));
         }
-        private static async Task<IResult> AddPost(PostEditModel model, 
-            IValidator<PostEditModel> validator, IBlogResponsitory blogResponsitory,
-            IAuthorRepository authorRepository,
-            IMapper mapper)
+        //private static async Task<IResult> AddPost(PostEditModel model,
+        //    IValidator<PostEditModel> validator, IBlogResponsitory blogResponsitory,
+        //    IAuthorRepository authorRepository,
+        //    IMapper mapper)
+        //{
+        //    if (await blogResponsitory.IsPostSlugExistedAsync(0, model.UrlSlug))
+        //    {
+        //        return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug {model.UrlSlug} đã tồn tại"));
+        //    };
+        //    if (await blogResponsitory.GetCategoryByIdAsync(model.CategoryId) == null)
+        //    {
+        //        return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Không tìm thấy bài viết với chủ đề có id{model.CategoryId}"));
+
+        //    }
+        //    if (await authorRepository.GetAuthorByIdAsync(model.AuthorId) == null)
+        //    {
+        //        return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Không tìm thấy bài viết với tác giả có id{model.AuthorId}"));
+        //    }
+        //    var post = mapper.Map<Post>(model);
+        //    post.PostedDate = DateTime.UtcNow;
+        //    await blogResponsitory.CreateOrUpdatePostAsync(post, model.GetSelectedTags());
+        //    return Results.Ok(ApiResponse.Success(mapper.Map<PostDto>(post), HttpStatusCode.Created));
+        //}
+
+        private static async Task<IResult> AddPost(
+            HttpContext context,
+            IBlogResponsitory blogResponsitory,
+            IMapper mapper, IMediaManager media)
         {
-            if(await blogResponsitory.IsPostSlugExistedAsync(0, model.UrlSlug))
+            var model = await PostEditModel.BindAsync(context);
+            var slug = model.Title.GenerateSlug();
+            if (await blogResponsitory.IsPostSlugExistedAsync(model.Id, slug))
             {
-                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Slug {model.UrlSlug} đã tồn tại"));
-            };
-            if(await blogResponsitory.GetCategoryByIdAsync(model.CategoryId) == null)
+                return Results.Ok(ApiResponse.Fail(
+                    HttpStatusCode.Conflict, $"Slug {slug} đã được sử dụng cho bài viết khác"));
+            }
+            var post = model.Id > 0 ? await blogResponsitory.GetPostbyIdAsync(model.Id) : null;
+            if (post == null)
             {
-                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Không tìm thấy bài viết với chủ đề có id{model.CategoryId}"));
+                post = new Post()
+                {
+                    PostedDate = DateTime.Now
+                };
 
             }
-            if(await authorRepository.GetAuthorByIdAsync(model.AuthorId) == null)
+
+            post.Title = model.Title;
+            post.AuthorId = model.AuthorId;
+            post.CategoryId = model.CategoryId;
+            post.ShortDescription = model.ShortDescription;
+            post.Description = model.Description;
+            post.Meta = model.Meta;
+            post.Published = model.Published;
+            post.ModifiedDate = DateTime.Now;
+            post.UrlSlug = model.Title.GenerateSlug();
+
+            if (model.ImageFile?.Length > 0)
             {
-                return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Không tìm thấy bài viết với tác giả có id{model.AuthorId}"));
+                string hostname = $"{context.Request.Scheme}://{context.Request.Host}{context.Request.PathBase}/",
+                    uploadedPath = await media.SaveFileAsync(
+                        model.ImageFile.OpenReadStream(), model.ImageFile.FileName, model.ImageFile.ContentType);
+                if (!string.IsNullOrWhiteSpace(uploadedPath))
+                {
+                    post.ImageUrl = uploadedPath;
+                }
             }
-            var post = mapper.Map<Post>(model);
-            post.PostedDate= DateTime.UtcNow;
             await blogResponsitory.CreateOrUpdatePostAsync(post, model.GetSelectedTags());
-            return Results.Ok(ApiResponse.Success(mapper.Map<PostDto>(post), HttpStatusCode.Created));
+            return Results.Ok(ApiResponse.Success(mapper.Map<PostItem>(post), HttpStatusCode.Created));
+
         }
-
-
         private static async Task<IResult> DeletePost(
      int id,
      IBlogResponsitory blogRepository)
@@ -168,9 +230,9 @@ namespace TatBlog.WebApi.Endpoints
                   $"Không tìm thấy bài viết id = {id}"));
         }
         private static async Task<IResult> UpdatePost(
-            int id, 
+            int id,
             PostEditModel model,
-            IMapper mapper, 
+            IMapper mapper,
             IBlogResponsitory blogResponsitory,
             IAuthorRepository authorRepository)
         {
@@ -192,7 +254,7 @@ namespace TatBlog.WebApi.Endpoints
             {
                 return Results.Ok(ApiResponse.Fail(HttpStatusCode.Conflict, $"Không tìm thấy bài viết với tác giả có id{model.AuthorId}"));
             }
-             mapper.Map(model, post);
+            mapper.Map(model, post);
             post.Id = id;
             post.ModifiedDate = DateTime.Now;
 

@@ -19,6 +19,12 @@ namespace TatBlog.WebApi.Mapsters
                 .Map(dest => dest.PostCount, src => src.Posts==null? 0: src.Posts.Count);
             config.NewConfig<Post, PostDto>();
             config.NewConfig<Post, PostDetail>();
+            config.NewConfig<PostEditModel, Post>()
+                .Ignore(dest=> dest.ImageUrl);
+            config.NewConfig<Tag, TagItem>()
+                .Map(dest => dest.PostCount, src => src.Posts.Count);
+            config.NewConfig<PostEditModel, PostQuery>()
+                .Map(dest => dest.PublishedOnly, src => false);
         }
     }
 }

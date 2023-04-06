@@ -505,11 +505,17 @@ namespace TatBlog.Services.Blogs
                         )
         {
             return await _context.Set<Post>()
+                .Include(c=> c.Category)
+                .Include(a=> a.Author)
               .OrderBy(p => Guid.NewGuid())
               .Take(r)
               .ToListAsync(cancellationToken);
         }
-        public async Task<IList<T>> RandomPosts<T>(int n, Func<IQueryable<Post>,IQueryable<T>> mapper,CancellationToken cancellationToken = default)
+        public async Task<IList<T>> RandomPosts<T>(
+            int n, 
+            Func<IQueryable<Post>,
+            IQueryable<T>> mapper,
+            CancellationToken cancellationToken = default)
         {
             IQueryable<Post> radomPost = _context.Set<Post>()
                 .Include(p=>p.Category)
@@ -537,7 +543,10 @@ namespace TatBlog.Services.Blogs
               .Where(p => p.UrlSlug == slug)
               .FirstOrDefaultAsync(cancellationToken);
         }
-        public async Task<IList<T>> GetFeaturePostsAsync<T>(int n, Func<IQueryable<Post>, IQueryable<T>> mapper, CancellationToken cancellationToken = default)
+        public async Task<IList<T>> GetFeaturePostsAsync<T>(int n,
+            Func<IQueryable<Post>, 
+                IQueryable<T>> mapper, 
+            CancellationToken cancellationToken = default)
         {
 
             IQueryable<Post> featurePost = _context.Set<Post>()

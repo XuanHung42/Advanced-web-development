@@ -60,6 +60,11 @@ namespace TatBlog.Services.Blogs
         Task<IPagedList<Post>> GetPagedPostsAsync(PostQuery query, int pageNumber,int pageSize ,CancellationToken cancellationToken = default);
 
         Task<IList<Post>> RandomPosts(int r,CancellationToken cancellationToken = default);
+        Task<IList<T>> RandomPosts<T>(
+            int n,
+            Func<IQueryable<Post>,
+            IQueryable<T>> mapper,
+            CancellationToken cancellationToken = default);
 
         Task<Post> GetPostbyIdAsync(
           int id,
@@ -110,7 +115,7 @@ namespace TatBlog.Services.Blogs
         Task<Category> GetCategoryByIdAsync(int id);
         Task<bool> AddOrUpdateCategoryAsync(
       Category category, CancellationToken cancellationToken = default);
-        Task<IList<T>> RandomPosts<T>(int n, Func<IQueryable<Post>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
+        //Task<IList<T>> RandomPosts<T>(int n, Func<IQueryable<Post>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
         Task<IList<T>> GetFeaturePostsAsync<T>(int n, Func<IQueryable<Post>, IQueryable<T>> mapper, CancellationToken cancellationToken = default);
         Task<Post> GetPostBySlugAsync(
        string slug,
