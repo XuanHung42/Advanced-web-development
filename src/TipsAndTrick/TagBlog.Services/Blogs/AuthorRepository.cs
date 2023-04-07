@@ -207,6 +207,23 @@ public class AuthorRepository : IAuthorRepository
             .Take(n).ToPagedListAsync(pagingParams, cancellationToken);
 
     }
+	public async Task<List<AuthorItem>> GetBestAuthors(int n, CancellationToken cancellationToken = default)
+	{
+		return await _context.Set<Author>()
+			.Select(a => new AuthorItem()
+			{
+				Id = a.Id,
+				Email = a.Email,
+				UrlSlug = a.UrlSlug,
+				Notes = a.Notes,
+				FullName = a.FullName,
+				ImageUrl = a.ImageUrl,
+				JoinDate = a.JoinDate,
+				PostCount = a.Posts.Count(p => p.Published),
+			})
+			.Take(n)
+			.ToListAsync(cancellationToken);
+	}
     public async Task<IPagedList<T>> GetAuthorTopPostAsync<T>(
        int n,
        IPagingParams pagingParams,

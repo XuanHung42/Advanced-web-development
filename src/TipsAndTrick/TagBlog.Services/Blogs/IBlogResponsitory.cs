@@ -28,7 +28,6 @@ namespace TatBlog.Services.Blogs
         {
             throw new NotImplementedException();
         }
-
         Task<IList<Post>> GetPopularArticlesAsync(int numPosts, CancellationToken cancellationToken = default)
         {
             throw new NotImplementedException();

@@ -3,6 +3,8 @@ import SearchForm from './SearchForm';
 import CategoriesWidget from './CategoriesWidget';
 import PostsFeatureWidget from './PostsFeatureWidget';
 import PostRadomWidget from './PostsRadomWidget';
+import TagsCloudWidget from './TagsCloudWidget';
+import BestAuthorsWidget from './BestAuthorsWIdget';
 
 const Sidebar = ()=> {
     return(
@@ -11,6 +13,8 @@ const Sidebar = ()=> {
            <CategoriesWidget/>
            <PostsFeatureWidget/>
            <PostRadomWidget/>
+           <TagsCloudWidget/>
+           <BestAuthorsWidget/>
 
         </div>
     )

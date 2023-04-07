@@ -125,8 +125,8 @@ namespace TatBlog.WebApi.Endpoints
         }
         private static async Task<IResult> GetFeaturePosts(int limit, IBlogResponsitory blogResponsitory, IMapper mapper)
         {
-            var postList = await blogResponsitory.GetPopularArticlesAsync(limit);
-            var ftPost = mapper.Map<IList<PostDto>>(postList);
+            var ftPost = await blogResponsitory.GetFeaturePostsAsync(limit, p => p.ProjectToType<PostDto>());
+            //var ftPost = mapper.Map<IList<PostDto>>(postList);
             return Results.Ok(ApiResponse.Success(ftPost));
 
 

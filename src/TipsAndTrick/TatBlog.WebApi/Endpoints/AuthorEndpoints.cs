@@ -24,7 +24,10 @@ namespace TatBlog.WebApi.Endpoints
             routeGroupBuilder.MapGet("/", GetAuthors)
                 .WithName("GetAuthors")
                 .Produces<ApiResponse<PaginationResult<AuthorItem>>>();
-                //.Produces<PaginationResult<AuthorItem>>();
+            //.Produces<PaginationResult<AuthorItem>>();
+            routeGroupBuilder.MapGet("/best", GetBestAuthors)
+                .WithName("GetBestAuthors")
+                .Produces<ApiResponse<AuthorItem>>();
 
             routeGroupBuilder.MapGet("/{id:int}", GetAuthorDetail)
                 .WithName("GetAuthorById")
@@ -77,7 +80,11 @@ namespace TatBlog.WebApi.Endpoints
             //return Results.Ok(paginationResult);
 
         }
-
+        private static async Task<IResult> GetBestAuthors(int limit,IAuthorRepository authorRepository)
+        {
+            var bestAuthor = await authorRepository.GetBestAuthors(limit);
+            return Results.Ok(ApiResponse.Success(bestAuthor));
+        }
         private static async Task<IResult> GetAuthorDetail(int id, IAuthorRepository authorRepository, IMapper mapper)
         {
             var author = await authorRepository.GetCachedAuthorByIdAsync(id);

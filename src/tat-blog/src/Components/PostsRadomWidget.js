@@ -24,7 +24,7 @@ const PostRadomWidget=()=>{
                 {PostsRadom.map((item, index)=> {
                     return(
                         <ListGroup.Item key={index}>
-                            <Link to={`/blog/category?slug=${item.urlSlug}`}
+                            <Link to={`/blog/post/radom/?slug=${item.urlSlug}`}
                             title={item.description}
                             key={index}>
                                 {item.title}

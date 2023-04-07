@@ -18,9 +18,9 @@ namespace TatBlog.WebApi.Endpoints
          this WebApplication app)
         {
             var routeGroupBuilder = app.MapGroup("/api/tags");
-            routeGroupBuilder.MapGet("/", GetTags)
+            routeGroupBuilder.MapGet("/", GetTagCloud)
                 .WithName("GetTags")
-                .Produces<ApiResponse<PaginationResult<TagItem>>>();
+                .Produces<ApiResponse<TagItem>>();
 
             routeGroupBuilder.MapGet("/{id:int}", GetTagDetail)
                 .WithName("GetTagById")
@@ -64,6 +64,11 @@ namespace TatBlog.WebApi.Endpoints
             return Results.Ok(ApiResponse.Success(paginationResult));
            
 
+        }
+        private static async Task<IResult> GetTagCloud(IBlogResponsitory blogResponsitory)
+        {
+            var tagList = await blogResponsitory.GetTagsAsync();
+            return Results.Ok(ApiResponse.Success(tagList));
         }
 
         private static async Task<IResult> GetTagDetail(int id, IBlogResponsitory blogRepository, IMapper mapper)
