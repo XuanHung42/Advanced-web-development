@@ -3,9 +3,10 @@ import { useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PostList from "../Components/Blog/posts/PostItem";
 import Pager from "../Components/Pager";
-import { getPostByAuthorSlug } from "../Services/BlogRepository";
+import { getPostByCateSlug } from "../Services/BlogRepository";
 
-export default function PostByAuthor() {
+
+export default function PostByCateSlug() {
   const params = useParams();
   const [posts, setPosts] = useState([]);
   const [metadata, setMetadata] = useState({});
@@ -20,9 +21,9 @@ export default function PostByAuthor() {
     pageSize = query.get("ps") ?? 3;
 
   useEffect(() => {
-    loadPostsByAuthorSlug();
-    async function loadPostsByAuthorSlug() {
-      const data = await getPostByAuthorSlug(params.slug, pageSize, pageNumber);
+    loadPostsByCateSlug();
+    async function loadPostsByCateSlug() {
+      const data = await getPostByCateSlug(params.cateSlug, pageSize, pageNumber);
       if (data) {
         setPosts(data.items);
         setMetadata(data.metadata);

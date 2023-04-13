@@ -3,10 +3,10 @@ import { useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PostList from "../Components/Blog/posts/PostItem";
 import Pager from "../Components/Pager";
-import { getPostByCateSlug } from "../Services/BlogRepository";
+import { getPostByTagSlug } from "../Services/BlogRepository";
 
 
-export default function PostByCateSlug() {
+export default function PostsByTag() {
   const params = useParams();
   const [posts, setPosts] = useState([]);
   const [metadata, setMetadata] = useState({});
@@ -21,9 +21,9 @@ export default function PostByCateSlug() {
     pageSize = query.get("ps") ?? 3;
 
   useEffect(() => {
-    loadPostsByCateSlug();
-    async function loadPostsByCateSlug() {
-      const data = await getPostByCateSlug(params.slug, pageSize, pageNumber);
+    loadPostsByTagSlug();
+    async function loadPostsByTagSlug() {
+      const data = await getPostByTagSlug(params.tagSlug, pageSize, pageNumber);
       if (data) {
         setPosts(data.items);
         setMetadata(data.metadata);

@@ -7,7 +7,7 @@ import { Link } from "react-router-dom";
 
 const PostDetail=()=>{
     const params = useParams();
-    const [post, setPosts]= useState(null);
+    const [post, setPosts]= useState('');
     const {slug }= params;
     let imageUrl = !post|| isEmplyOrSpaces(post.imageUrl)
         ?process.env.PUBLIC_URL + "/images/image_1.jpg"

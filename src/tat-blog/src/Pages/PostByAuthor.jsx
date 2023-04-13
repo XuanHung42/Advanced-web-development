@@ -3,10 +3,9 @@ import { useLocation, useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import PostList from "../Components/Blog/posts/PostItem";
 import Pager from "../Components/Pager";
-import { getPostByTagSlug } from "../Services/BlogRepository";
+import { getPostByAuthorSlug } from "../Services/BlogRepository";
 
-
-export default function PostsByTag() {
+export default function PostByAuthor() {
   const params = useParams();
   const [posts, setPosts] = useState([]);
   const [metadata, setMetadata] = useState({});
@@ -21,9 +20,9 @@ export default function PostsByTag() {
     pageSize = query.get("ps") ?? 3;
 
   useEffect(() => {
-    loadPostsByTagSlug();
-    async function loadPostsByTagSlug() {
-      const data = await getPostByTagSlug(params.slug, pageSize, pageNumber);
+    loadPostsByAuthorSlug();
+    async function loadPostsByAuthorSlug() {
+      const data = await getPostByAuthorSlug(params.authorSlug, pageSize, pageNumber);
       if (data) {
         setPosts(data.items);
         setMetadata(data.metadata);
@@ -32,6 +31,7 @@ export default function PostsByTag() {
   }, [params, pageSize, pageNumber]);
 
   return (
+   
     <div className="p-4">
       {posts.map((item) => {
         return <PostList key={item.id} postItem={item} />;

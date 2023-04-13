@@ -40,10 +40,10 @@ function App() {
                   <Route path='blog/contact' element={<Contact/>}/>
                   <Route path='blog/about' element={<About/>}/>
                   <Route path='blog/RSS' element={<Rss/>}/>
-                  <Route path='/blog/tag/:slug' element={<PostsByTag/>}/>
+                  <Route path='/blog/tag/:tagSlug' element={<PostsByTag/>}/>
                   <Route path="/post/:slug" element={<PostDetail/>}/>
-                  <Route path="/blog/category/:slug" element={<PostByCateSlug/>}/>
-                  <Route path="/blog/author/:slug" element={<PostByAuthor/>}/>
+                  <Route path="/blog/category/:cateSlug" element={<PostByCateSlug/>}/>
+                  <Route path="/blog/author/:authorSlug" element={<PostByAuthor/>}/>
 
                  
                 </Route>
