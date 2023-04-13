@@ -1,4 +1,5 @@
 ﻿using FluentValidation;
+using Mapster;
 using MapsterMapper;
 using Microsoft.AspNetCore.Mvc;
 using System.Net;
@@ -26,15 +27,18 @@ namespace TatBlog.WebApi.Endpoints
                 .WithName("GetTagById")
                 .Produces<ApiResponse<TagItem>>();
 
-           
+
             routeGroupBuilder.MapPost("/", AddTag)
 
               .AddEndpointFilter<ValidatorFilter<TagEditModel>>()
               .WithName("AddNewTag")
 
               .Produces(401)
-              .Produces<ApiResponse<AuthorItem>>();
-           
+              .Produces<ApiResponse<TagItem>>();
+            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9_-]+$)}", GetPostsByTagsSlug)
+                .WithName("GetPostsByTagsSlug")
+                .Produces<ApiResponse<PaginationResult<PostDto>>>();
+
 
             routeGroupBuilder.MapPut("/{id:int}", UpdateTag)
             .WithName("UpdateTag")
@@ -46,7 +50,7 @@ namespace TatBlog.WebApi.Endpoints
             .WithName("DeleteTag")
             .Produces(401)
             .Produces<ApiResponse<string>>();
-           
+
 
 
             return app;
@@ -62,7 +66,7 @@ namespace TatBlog.WebApi.Endpoints
 
             var paginationResult = new PaginationResult<TagItem>(tagList);
             return Results.Ok(ApiResponse.Success(paginationResult));
-           
+
 
         }
         private static async Task<IResult> GetTagCloud(IBlogResponsitory blogResponsitory)
@@ -78,8 +82,8 @@ namespace TatBlog.WebApi.Endpoints
                 ? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Không tìm thấy tác giả có mã số {id}"))
                 : Results.Ok(ApiResponse.Success(mapper.Map<TagItem>(tag)));
         }
-      
-      
+
+
 
         private static async Task<IResult> AddTag(TagEditModel model, IValidator<TagEditModel> validator, IBlogResponsitory blogResponsitory, IMapper mapper)
         {
@@ -93,7 +97,7 @@ namespace TatBlog.WebApi.Endpoints
             await blogResponsitory.CreateOrUpdateTagAsync(tag);
             return Results.Ok(ApiResponse.Success(mapper.Map<Tag>(tag), HttpStatusCode.Created));
         }
-        
+
         private static async Task<IResult> UpdateTag(int id, TagEditModel model, IValidator<TagEditModel> validator, IBlogResponsitory blogResponsitory, IMapper mapper)
         {
             var validationResult = await validator.ValidateAsync(model);
@@ -120,6 +124,23 @@ namespace TatBlog.WebApi.Endpoints
                 : Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, "Could not find tag"));
 
         }
-     
+        private static async Task<IResult> GetPostsByTagsSlug(
+           [FromRoute] string slug,
+           [AsParameters] PagingModel pagingModel,
+           IBlogResponsitory blogRepository)
+        {
+            var postQuery = new PostQuery()
+            {
+                TagSlug = slug,
+            };
+
+            var tagList = await blogRepository.GetPagedPostsAsync(
+                postQuery, pagingModel,
+                posts => posts.ProjectToType<PostDto>());
+
+            var paginationResult = new PaginationResult<PostDto>(tagList);
+
+            return Results.Ok(ApiResponse.Success(paginationResult));
+        }
     }
 }

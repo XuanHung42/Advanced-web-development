@@ -26,7 +26,7 @@ namespace TatBlog.WebApi.Filters
                 return Results.BadRequest(
                   new ValidationFailureResponse(
                     new[] {
-              "Could not create model object"
+                    "Could not create model object"
                     }));
             }
 

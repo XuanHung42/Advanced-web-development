@@ -43,6 +43,9 @@ namespace TatBlog.WebApi.Endpoints
             routeGroupBuilder.MapGet("/{id:int}", GetPostDetail)
                 .WithName("GetDetailPost")
                 .Produces<ApiResponse<PostItem>>();
+            routeGroupBuilder.MapGet("/slug/{slug:regex(^[a-z0-9_-]+$)}", GetPostBySlug)
+              .WithName("GetPostsDetailBySlug")
+              .Produces<ApiResponse<PostDetail>>();
             routeGroupBuilder.MapPost("/{id:int}/avatar", SetPostPicture)
           .WithName("SetPostPicture")
           .Accepts<IFormFile>("multipart/form-data")

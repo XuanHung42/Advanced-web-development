@@ -1,5 +1,5 @@
 import React ,{useEffect, useState }from 'react';
-import PostItem from '../Components/PostItem';
+import PostItem from '../Components/Blog/posts/PostItem';
 import { getPosts } from '../Services/BlogRepository';
 import { useLocation } from 'react-router-dom';
 import Pager from '../Components/Pager';

@@ -24,7 +24,7 @@ namespace TatBlog.WebApi.Endpoints
             routeGroupBuilder.MapGet("/{id:int}", GetDetailCategory)
                 .WithName("GetCategoryDetail")
                 .Produces<ApiResponse<CategoryItem>>();
-            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9 - ] + $)}/posts", GetPostByCategorySlug)
+            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9_-]+$)}/posts", GetPostByCategorySlug)
               .WithName("GetPostsByCategoriesSlug")
                .Produces<ApiResponse<PaginationResult<PostDto>>>();
             routeGroupBuilder.MapPost("/", AddCategory)
@@ -71,8 +71,8 @@ namespace TatBlog.WebApi.Endpoints
                 CategorySlug = slug,
 
             };
-            var categoryList = await blog.GetPagedPostsAsync(categoryQuery, pagingModel, cate => cate.ProjectToType<CategoryDto>());
-            var paginationResult = new PaginationResult<CategoryDto>(categoryList);
+            var categoryList = await blog.GetPagedPostsAsync(categoryQuery, pagingModel, cate => cate.ProjectToType<PostDto>());
+            var paginationResult = new PaginationResult<PostDto>(categoryList);
             return Results.Ok(ApiResponse.Success(paginationResult));
 
         }

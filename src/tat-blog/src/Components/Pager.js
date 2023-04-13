@@ -11,7 +11,7 @@ const Pager = ({
         pageSize = metadata.pageSize,        
         actionName = '' ,  
         slug = '';
-        // keyword = postquery.keyword ??  '';    
+        //keyword = postquery.keyword ??  '';    
         if (   pageCount > 1) {        
             return ( <div className='text-center my-4' > 
             {hasPreviousPage ?  

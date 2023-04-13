@@ -1,3 +1,5 @@
+
+
 import {Link} from 'react-router-dom'
 const TagList =({tagList})=> {
 
@@ -6,10 +8,10 @@ const TagList =({tagList})=> {
         <>
         {tagList.map((item, index)=> {
         return(
-            <Link to={`/blog/tag?slug=${item.name}`}
+            <Link to={`/blog/tag/${item.name}`}
             title={item.name}
             key={index}
-            className='btn btn-sm btn-outline-secondary me-1'>
+            className='btn btn-sm btn-outline-primary me-1'>
                 {item.name}
             </Link>
         );

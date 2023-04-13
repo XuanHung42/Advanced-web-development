@@ -1,36 +1,34 @@
 import { useState, useEffect } from "react";
 import  ListGroup  from "react-bootstrap/ListGroup";
 import {Link } from "react-router-dom";
-import { getTagsCloud } from "../Services/TagCloud";
-
-
-const TagsCloudWidget = ()=>{
-    const[TagsCloud, setTagsCloud]= useState([]);
+import { getBestAuthors } from "../../../Services/AuthorsRepository";
+const BestAuthorsWidget = ()=>{
+    const[BestAuthors, setBestAuthors]= useState([]);
     useEffect(()=> {
-        getTagsCloud().then(data=>{
+        getBestAuthors().then(data=>{
             if(data){
-                setTagsCloud(data)
+                setBestAuthors(data)
             }
             else
             {
-                setTagsCloud([])
+                setBestAuthors([])
             }
         });
     }, [])
-    return(
-        <div className="mb-4">
+return(
+    <div className="mb-4">
         <h3 className="text-success mb2">
-            Tags Cloud
+            Tác giả nổi bật
         </h3>
-        {TagsCloud.length >0 &&
+        {BestAuthors.length >0 &&
         <ListGroup>
-            {TagsCloud.map((item, index)=> {
+            {BestAuthors.map((item, index)=> {
                 return(
                     <ListGroup.Item key={index}>
-                        <Link to={`/blog/tag?slug=${item.urlSlug}`}
-                        title={item.description}
+                        <Link to={`/blog/author/${item.urlSlug}`}
+                        title={item.fullName}
                         key={index}>
-                            {item.name}
+                            {item.fullName}
                             <span>&nbsp; ({item.postCount}) </span>
                         </Link>
                     </ListGroup.Item>
@@ -38,6 +36,7 @@ const TagsCloudWidget = ()=>{
             })}
             </ListGroup>}
     </div>
-    )
+)
 }
-export default TagsCloudWidget
+
+export default BestAuthorsWidget

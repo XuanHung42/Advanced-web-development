@@ -33,7 +33,7 @@ namespace TatBlog.WebApi.Endpoints
                 .WithName("GetAuthorById")
                 .Produces<ApiResponse<AuthorItem>>();
 
-            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9 - ] + $)}/posts", GetPostByAuthorSlug)
+            routeGroupBuilder.MapGet("/{slug:regex(^[a-z0-9_-]+$)}/posts", GetPostByAuthorSlug)
                 .WithName("GetPostsByAuthorsSlug")
                  .Produces<ApiResponse<PaginationResult<PostDto>>>();
             routeGroupBuilder.MapPost("/", AddAuthor)
