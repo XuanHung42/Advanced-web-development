@@ -30,7 +30,7 @@ const Navbar =()=> {
                         </Nav.Item>
                         <Nav.Item>
                             <Link to='/admin/posts' className="nav-link text-dark">
-                                Chủ đề
+                               Bài viết
                             </Link>
                             
                         </Nav.Item>

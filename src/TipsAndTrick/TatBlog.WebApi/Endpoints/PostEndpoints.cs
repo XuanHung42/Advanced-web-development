@@ -42,7 +42,7 @@ namespace TatBlog.WebApi.Endpoints
               .Produces<ApiResponse<IList<PostDto>>>();
             routeGroupBuilder.MapGet("/{id:int}", GetPostDetail)
                 .WithName("GetDetailPost")
-                .Produces<ApiResponse<PostItem>>();
+                .Produces<ApiResponse<PostDetail>>();
             routeGroupBuilder.MapGet("/slug/{slug:regex(^[a-z0-9_-]+$)}", GetPostBySlug)
               .WithName("GetPostsDetailBySlug")
               .Produces<ApiResponse<PostDetail>>();
@@ -136,10 +136,10 @@ namespace TatBlog.WebApi.Endpoints
         }
         private static async Task<IResult> GetPostDetail(int id, IBlogResponsitory blog, IMapper mapper)
         {
-            var post = await blog.FindPostByIdAsync(id);
+            var post = await blog.GetPostbyIdAsync(id);
             return post == null
                 ? Results.Ok(ApiResponse.Fail(HttpStatusCode.NotFound, $"Không tìm thấy bài viết có mã số {id}"))
-                : Results.Ok(ApiResponse.Success(mapper.Map<PostItem>(post)));
+                : Results.Ok(ApiResponse.Success(mapper.Map<PostDetail>(post)));
         }
         private static async Task<IResult> GetPostBySlug(string slug, IBlogResponsitory blogResponsitory, IMapper mapper)
         {

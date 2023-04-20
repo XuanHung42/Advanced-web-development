@@ -24,6 +24,9 @@ import PostsByTag from './Pages/PostsByTag';
 import PostDetail from './Pages/PostDetail';
 import PostByCateSlug from './Pages/PostByCateSlug';
 import PostByAuthor from './Pages/PostByAuthor';
+import NotFound from './Pages/NotFound';
+import BadResquest from './Pages/BadRequest';
+import Edit from './Pages/Admin/Post/Edit';
 
 
 
@@ -44,7 +47,10 @@ function App() {
                   <Route path="/post/:slug" element={<PostDetail/>}/>
                   <Route path="/blog/category/:cateSlug" element={<PostByCateSlug/>}/>
                   <Route path="/blog/author/:authorSlug" element={<PostByAuthor/>}/>
-
+                  <Route path='/admin/posts/edit' element={<Edit />} />
+                  <Route path='/admin/posts/edit/:id' element={<Edit />} />
+                  <Route path='*' element={<NotFound/>}/>
+                  <Route path='/400' element={<BadResquest/>}/>
                  
                 </Route>
                 <Route path='/admin' element={<AdminLayout/>}>
