@@ -6,7 +6,9 @@ namespace TatBlog.Services.Blogs;
 
 public interface IAuthorRepository
 {
-	Task<IPagedList<Author>> GetAuthorTopPostAsync(int n, IPagingParams pagingParams, CancellationToken cancellationToken = default);
+    Task<List<AuthorItem>> GetBestAuthors(int n, CancellationToken cancellationToken = default);
+
+    Task<IPagedList<Author>> GetAuthorTopPostAsync(int n, IPagingParams pagingParams, CancellationToken cancellationToken = default);
 
     Task<Author> GetAuthorByIdIsDetailAsync(int authorId, bool isDetail = false, CancellationToken cancellationToken = default);
 
@@ -55,4 +57,9 @@ public interface IAuthorRepository
    int pageNumber = 1,
    int pageSize = 5,
    CancellationToken cancellationToken = default);
+	Task<IPagedList<T>> GetAuthorTopPostAsync<T>(
+		 int n,
+		 IPagingParams pagingParams,
+		 Func<IQueryable<Author>, IQueryable<T>> mapper,
+		 CancellationToken cancellationToken = default);
 }

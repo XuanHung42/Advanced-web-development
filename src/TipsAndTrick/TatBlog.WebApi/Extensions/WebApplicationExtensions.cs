@@ -19,11 +19,16 @@ namespace TatBlog.WebApi.Extensions
                 builder.Configuration
                   .GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddScoped<IBlogResponsitory, BLogResponsitory>();
-            builder.Services.AddScoped<IAuthorRepository, AuthorRepository>();
-            builder.Services.AddScoped<IDataSeeder, DataSeeder>();
-            builder.Services.AddScoped<ITimeProvider, LocalTimeProvider>();
-            builder.Services.AddScoped<IMediaManager, LocalFileSystemMediaManager>();
+            builder.Services
+                .AddScoped<IBlogResponsitory, BLogResponsitory>();
+            builder.Services
+                .AddScoped<IAuthorRepository, AuthorRepository>();
+            //builder.Services
+            //    .AddScoped<IDataSeeder, DataSeeder>();
+            builder.Services
+                .AddScoped<ITimeProvider, LocalTimeProvider>();
+            builder.Services
+                .AddScoped<IMediaManager, LocalFileSystemMediaManager>();
             return builder;
         }
 
@@ -31,7 +36,10 @@ namespace TatBlog.WebApi.Extensions
         {
             builder.Services.AddCors(options =>
             {
-                options.AddPolicy("TatBlogApp", policyBuilder => policyBuilder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
+                options.AddPolicy("TatBlogApp", policyBuilder => policyBuilder
+                .AllowAnyOrigin()
+                .AllowAnyHeader()
+                .AllowAnyMethod());
 
             });
             return builder;
