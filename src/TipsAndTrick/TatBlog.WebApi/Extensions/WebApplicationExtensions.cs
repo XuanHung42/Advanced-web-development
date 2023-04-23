@@ -23,8 +23,8 @@ namespace TatBlog.WebApi.Extensions
                 .AddScoped<IBlogResponsitory, BLogResponsitory>();
             builder.Services
                 .AddScoped<IAuthorRepository, AuthorRepository>();
-            //builder.Services
-            //    .AddScoped<IDataSeeder, DataSeeder>();
+            builder.Services
+                .AddScoped<IDataSeeder, DataSeeder>();
             builder.Services
                 .AddScoped<ITimeProvider, LocalTimeProvider>();
             builder.Services
@@ -68,6 +68,25 @@ namespace TatBlog.WebApi.Extensions
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             return builder;
+        }
+
+        public static IApplicationBuilder UsingDataSeeder(this IApplicationBuilder app)
+        {
+            using var scope = app.ApplicationServices.CreateScope();
+            try
+            {
+                scope.ServiceProvider
+                    .GetRequiredService<IDataSeeder>()
+                    .Initialize();
+
+            }
+            catch (Exception ex)
+            {
+                scope.ServiceProvider
+                    .GetRequiredService<ILogger<Program>>()
+                    .LogError(ex, "Couldn't insert data into database");
+            }
+            return app;
         }
     }
 }

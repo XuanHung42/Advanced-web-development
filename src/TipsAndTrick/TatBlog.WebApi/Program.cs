@@ -11,6 +11,7 @@ var builder = WebApplication.CreateBuilder(args);
     builder
       .ConfigureCors()
       .ConfigureNLog()
+     
       .ConfigureServices()
       .ConfigureSwaggerOpenApi()
       .ConfigureMapster()
@@ -22,7 +23,7 @@ var app = builder.Build();
 
 {
     app.SetupRequestPipeline();
-
+    app.UsingDataSeeder();
     app.MapAuthorEndpoints();
     app.MapTagEndpoints();
     app.MapCategoryEndpoints();

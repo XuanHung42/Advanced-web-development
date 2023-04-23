@@ -47,8 +47,8 @@ function App() {
                   <Route path="/post/:slug" element={<PostDetail/>}/>
                   <Route path="/blog/category/:cateSlug" element={<PostByCateSlug/>}/>
                   <Route path="/blog/author/:authorSlug" element={<PostByAuthor/>}/>
-                  <Route path='/admin/posts/edit' element={<Edit />} />
-                  <Route path='/admin/posts/edit/:id' element={<Edit />} />
+                  <Route path='/admin/post/edit' element={<Edit />} />
+                  <Route path='/admin/post/edit/:id' element={<Edit />} />
                   <Route path='*' element={<NotFound/>}/>
                   <Route path='/400' element={<BadResquest/>}/>
                  
