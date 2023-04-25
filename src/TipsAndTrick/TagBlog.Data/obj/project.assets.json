@@ -3248,11 +3248,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
+      "projectUniqueName": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
       "projectName": "TatBlog.Data",
-      "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
+      "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\TatBlog.Data.csproj",
       "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-      "outputPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\obj\\",
+      "outputPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Data\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
@@ -3269,8 +3269,8 @@
         "net6.0": {
           "targetAlias": "net6.0",
           "projectReferences": {
-            "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
-              "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj"
+            "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
+              "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj"
             }
           }
         }

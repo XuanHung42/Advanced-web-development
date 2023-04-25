@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {}
+    "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {}
   },
   "projects": {
-    "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
+    "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
+        "projectUniqueName": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
         "projectName": "TatBlog.Core",
-        "projectPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
+        "projectPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\TatBlog.Core.csproj",
         "packagesPath": "C:\\Users\\ADMIN\\.nuget\\packages\\",
-        "outputPath": "D:\\Study\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\obj\\",
+        "outputPath": "D:\\Study\\3\\Advanced-web-development\\src\\TipsAndTrick\\TagBlog.Core\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\ADMIN\\AppData\\Roaming\\NuGet\\NuGet.Config",
