@@ -7,7 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Folder Include="Constants\" />
     <Folder Include="Settings\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\.editorconfig" Link=".editorconfig" />
   </ItemGroup>
 
   <ItemGroup>

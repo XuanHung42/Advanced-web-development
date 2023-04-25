@@ -3,13 +3,22 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33213.308
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TatBlog.Core", "TagBlog.Core\TatBlog.Core.csproj", "{BFE0B88C-DFA4-492D-B2FB-C80C3563AA98}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatBlog.Core", "TagBlog.Core\TatBlog.Core.csproj", "{BFE0B88C-DFA4-492D-B2FB-C80C3563AA98}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TatBlog.Data", "TagBlog.Data\TatBlog.Data.csproj", "{022D3D0B-2FA9-4FAC-A57B-3EB99B97C87F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatBlog.Data", "TagBlog.Data\TatBlog.Data.csproj", "{022D3D0B-2FA9-4FAC-A57B-3EB99B97C87F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TatBlog.Services", "TagBlog.Services\TatBlog.Services.csproj", "{94542B5D-9E43-43B9-9B09-2DD9B4286E78}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatBlog.Services", "TagBlog.Services\TatBlog.Services.csproj", "{94542B5D-9E43-43B9-9B09-2DD9B4286E78}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TatBlog.WinApp", "TatBlog.WinApp\TatBlog.WinApp.csproj", "{A8E54DB7-84D7-4FB2-8A52-14E832809043}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatBlog.WinApp", "TatBlog.WinApp\TatBlog.WinApp.csproj", "{A8E54DB7-84D7-4FB2-8A52-14E832809043}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatBlog.WebApp", "TatBlog.WebApp\TatBlog.WebApp.csproj", "{52ED42BF-56F9-45FC-8909-ECA47873E8EC}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TatBlog.WebApi", "TatBlog.WebApi\TatBlog.WebApi.csproj", "{34317D45-A500-4856-BD5C-163135BA0197}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{09D2008B-6533-4B1C-8232-7836B2A90FDE}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +42,14 @@ Global
 		{A8E54DB7-84D7-4FB2-8A52-14E832809043}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A8E54DB7-84D7-4FB2-8A52-14E832809043}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A8E54DB7-84D7-4FB2-8A52-14E832809043}.Release|Any CPU.Build.0 = Release|Any CPU
+		{52ED42BF-56F9-45FC-8909-ECA47873E8EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{52ED42BF-56F9-45FC-8909-ECA47873E8EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{52ED42BF-56F9-45FC-8909-ECA47873E8EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{52ED42BF-56F9-45FC-8909-ECA47873E8EC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34317D45-A500-4856-BD5C-163135BA0197}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34317D45-A500-4856-BD5C-163135BA0197}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34317D45-A500-4856-BD5C-163135BA0197}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34317D45-A500-4856-BD5C-163135BA0197}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

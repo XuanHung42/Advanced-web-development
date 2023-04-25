@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TatBlog.Core.Constants;
+using TatBlog.Core.Contracts;
 
 namespace TatBlog.Core.Entities
 {
@@ -15,6 +15,8 @@ namespace TatBlog.Core.Entities
         public string UrlSlug { get; set; }
         public string Description { get; set; }
         public IList<Post> Posts { get; set; }
+
+        
 
     }
 }

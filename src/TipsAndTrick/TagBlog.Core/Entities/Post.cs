@@ -4,7 +4,7 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using TatBlog.Core.Constants;
+using TatBlog.Core.Contracts;
 
 namespace TatBlog.Core.Entities
 {
@@ -23,9 +23,11 @@ namespace TatBlog.Core.Entities
         public DateTime? ModifiedDate { get; set; }
         public int CategoryId { get; set; }
         public int AuthorId { get; set; }
-        public Category Category { get; set; }
+
+		public Category Category { get; set; }
         public Author Author { get; set; }
         public IList<Tag> Tags { get; set; }
+        //public IList<Comment> Comments { get; set; }
 
     }
 }
