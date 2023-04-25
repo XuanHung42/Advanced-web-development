@@ -104,7 +104,13 @@ namespace TatBlog.Data.Seeders
         new(){Name = "Razor Page", Description = "Razor Page", UrlSlug="razor-page"},
         new(){Name = "Blazor", Description = "Blazor", UrlSlug="blazor"},
         new(){Name = "Deep Learning", Description = "Deep Lerning", UrlSlug="deep-learning"},
-        new(){Name = "Neural Network", Description = "Neural Network", UrlSlug="neural-network"},
+        new(){Name = "Work", Description = "Work", UrlSlug="money"},
+          new(){Name = "ReactJs", Description = "ReactJs", UrlSlug="react-js"},
+            new(){Name = "Money", Description = "Money", UrlSlug="money"},
+          new(){Name = "Neural Network", Description = "Neural Network", UrlSlug="neural-network"},
+            new(){Name = "Life", Description = "Life", UrlSlug="life"},
+              new(){Name = "Music", Description = "Music", UrlSlug="mucsic"},
+        
       };
 
 
@@ -287,8 +293,17 @@ namespace TatBlog.Data.Seeders
 					CommentDate= new DateTime(2023,1,1,0,0,0 ),
 					Content="This is really helpful"
 
-				}
-			};
+				},
+                  new(){
+
+                    Email= "persie20@gmail.com",
+                    UserName= "Van Persie",
+                    Post= posts[1],
+                    CommentDate= new DateTime(2023,1,1,0,0,0 ),
+                    Content="This is really helpful"
+
+                }
+            };
 
             foreach(var comment in comments)
             {
